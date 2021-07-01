@@ -3,22 +3,41 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.MVC", "MonoProject\MonoProject.MVC.csproj", "{E04EDF01-4662-4A5E-9691-BDAD3FA0F031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.DAL", "MonoProject.DAL\MonoProject.DAL.csproj", "{BCF20ED7-C79E-437F-8663-1DDF34270276}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.Service", "MonoProject.Service\MonoProject.Service.csproj", "{C2079EB5-5038-4F6F-9126-D068C2AD2E0C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CB8FD506-3C96-4EE6-B7DD-8758222578EA} = {CB8FD506-3C96-4EE6-B7DD-8758222578EA}
+		{AF286B42-7EC2-471D-81BF-0B4B9B82B604} = {AF286B42-7EC2-471D-81BF-0B4B9B82B604}
+		{3B9DFB97-F17F-4CA7-B5FD-330BE79027CC} = {3B9DFB97-F17F-4CA7-B5FD-330BE79027CC}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.Repository", "MonoProject.Repository\MonoProject.Repository.csproj", "{CB8FD506-3C96-4EE6-B7DD-8758222578EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF286B42-7EC2-471D-81BF-0B4B9B82B604} = {AF286B42-7EC2-471D-81BF-0B4B9B82B604}
+		{F693E49F-BE70-4E2D-95F7-53913011C893} = {F693E49F-BE70-4E2D-95F7-53913011C893}
 		{BCF20ED7-C79E-437F-8663-1DDF34270276} = {BCF20ED7-C79E-437F-8663-1DDF34270276}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.DAL", "MonoProject.DAL\MonoProject.DAL.csproj", "{BCF20ED7-C79E-437F-8663-1DDF34270276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.Common", "MonoProject.Common\MonoProject.Common.csproj", "{AF286B42-7EC2-471D-81BF-0B4B9B82B604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.Service", "MonoProject.Service\MonoProject.Service.csproj", "{C2079EB5-5038-4F6F-9126-D068C2AD2E0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.Service.Common", "MonoProject.Service.Common\MonoProject.Service.Common.csproj", "{3B9DFB97-F17F-4CA7-B5FD-330BE79027CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF286B42-7EC2-471D-81BF-0B4B9B82B604} = {AF286B42-7EC2-471D-81BF-0B4B9B82B604}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.Repository", "MonoProject.Repository\MonoProject.Repository.csproj", "{CB8FD506-3C96-4EE6-B7DD-8758222578EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.Repository.Common", "MonoProject.Repository.Common\MonoProject.Repository.Common.csproj", "{F693E49F-BE70-4E2D-95F7-53913011C893}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF286B42-7EC2-471D-81BF-0B4B9B82B604} = {AF286B42-7EC2-471D-81BF-0B4B9B82B604}
+		{BCF20ED7-C79E-437F-8663-1DDF34270276} = {BCF20ED7-C79E-437F-8663-1DDF34270276}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.Common", "MonoProject.Common\MonoProject.Common.csproj", "{AF286B42-7EC2-471D-81BF-0B4B9B82B604}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.Service.Common", "MonoProject.Service.Common\MonoProject.Service.Common.csproj", "{3B9DFB97-F17F-4CA7-B5FD-330BE79027CC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.Repository.Common", "MonoProject.Repository.Common\MonoProject.Repository.Common.csproj", "{F693E49F-BE70-4E2D-95F7-53913011C893}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoProject.MVC", "MonoProject.MVC\MonoProject.MVC.csproj", "{D3C284D9-4C31-4168-A4A5-B45F24342E1B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CB8FD506-3C96-4EE6-B7DD-8758222578EA} = {CB8FD506-3C96-4EE6-B7DD-8758222578EA}
+		{C2079EB5-5038-4F6F-9126-D068C2AD2E0C} = {C2079EB5-5038-4F6F-9126-D068C2AD2E0C}
+		{BCF20ED7-C79E-437F-8663-1DDF34270276} = {BCF20ED7-C79E-437F-8663-1DDF34270276}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +45,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E04EDF01-4662-4A5E-9691-BDAD3FA0F031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E04EDF01-4662-4A5E-9691-BDAD3FA0F031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E04EDF01-4662-4A5E-9691-BDAD3FA0F031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E04EDF01-4662-4A5E-9691-BDAD3FA0F031}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BCF20ED7-C79E-437F-8663-1DDF34270276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCF20ED7-C79E-437F-8663-1DDF34270276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF20ED7-C79E-437F-8663-1DDF34270276}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,6 +69,10 @@ Global
 		{F693E49F-BE70-4E2D-95F7-53913011C893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F693E49F-BE70-4E2D-95F7-53913011C893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F693E49F-BE70-4E2D-95F7-53913011C893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C284D9-4C31-4168-A4A5-B45F24342E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C284D9-4C31-4168-A4A5-B45F24342E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C284D9-4C31-4168-A4A5-B45F24342E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C284D9-4C31-4168-A4A5-B45F24342E1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
