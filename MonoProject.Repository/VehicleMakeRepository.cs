@@ -12,9 +12,17 @@ namespace MonoProject.Repository
 {
     public class VehicleMakeRepository : IVehicleMakeRepository
     {
+        private readonly IMapper mapper;
+        private readonly IGenericRepository genericRepository;
+
         public VehicleMakeRepository(IMapper mapper, IGenericRepository genericRepository)
         {
-
+            this.mapper = mapper;
+            this.genericRepository = genericRepository;
+        }
+        public Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<int> AddAsync(VehicleMakeDTO entity)
@@ -32,10 +40,6 @@ namespace MonoProject.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<VehicleMakeDTO> GetAsync(Guid id)
         {

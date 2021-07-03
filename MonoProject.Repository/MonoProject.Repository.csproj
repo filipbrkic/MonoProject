@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MonoProject.DAL\MonoProject.DAL.csproj" />
     <ProjectReference Include="..\MonoProject.Repository.Common\MonoProject.Repository.Common.csproj" />
   </ItemGroup>
