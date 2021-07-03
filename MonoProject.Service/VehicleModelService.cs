@@ -17,35 +17,35 @@ namespace MonoProject.Service
         {
             this.vehicleModelService = vehicleModelService;
         }
-        public Task<IEnumerable<VehicleModelDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
+        public async Task<IEnumerable<VehicleModelDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.GetAllAsync(filtering, paging, sorting);
         }
 
-        public Task<int> AddAsync(VehicleModelDTO entity)
+        public async Task<int> AddAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.AddAsync(entity);
         }
 
-        public Task<int> DeleteAsync(Guid id)
+        public async Task<int> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.DeleteAsync(id);
         }
 
-        public Task<int> DeleteAsync(VehicleModelDTO entity)
+        public async Task<int> DeleteAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.DeleteAsync(entity);
         }
 
 
-        public Task<VehicleModelDTO> GetAsync(Guid id)
+        public async Task<VehicleModelDTO> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.GetAsync(id);
         }
 
-        public Task<int> UpdateAsync(VehicleModelDTO entity)
+        public async Task<int> UpdateAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            return await vehicleModelService.UpdateAsync(entity);
         }
     }
 }

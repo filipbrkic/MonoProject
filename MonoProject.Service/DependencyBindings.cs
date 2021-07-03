@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MonoProject.Service.Common;
 
 namespace MonoProject.Service
 {
-    class DependencyBindings
+    public static class DependencyBindings
     {
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddTransient<IVehicleMakeService, VehicleMakeService>();
+            services.AddTransient<IVehicleModelService, VehicleModelService>();
+        }
     }
 }
