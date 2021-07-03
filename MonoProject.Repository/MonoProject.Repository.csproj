@@ -7,4 +7,9 @@
     <StartupObject />
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MonoProject.DAL\MonoProject.DAL.csproj" />
+    <ProjectReference Include="..\MonoProject.Repository.Common\MonoProject.Repository.Common.csproj" />
+  </ItemGroup>
+
 </Project>
