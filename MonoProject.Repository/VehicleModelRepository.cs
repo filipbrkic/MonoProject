@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
-using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -21,36 +20,35 @@ namespace MonoProject.Repository
             this.mapper = mapper;
             this.genericRepository = genericRepository;
         }
-        public async Task<IEnumerable<VehicleModelDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
+        public Task<IEnumerable<VehicleModelDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> AddAsync(VehicleModelDTO entity)
+        public Task<int> AddAsync(VehicleModelDTO entity)
         {
-            entity.Id = Guid.NewGuid();
-            return await genericRepository.AddAsync(mapper.Map<VehicleModel>(entity));
+            throw new NotImplementedException();
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public Task<int> DeleteAsync(Guid id)
         {
-            return await genericRepository.DeleteAsync<VehicleModel>(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<int> DeleteAsync(VehicleModelDTO entity)
+        public Task<int> DeleteAsync(VehicleModelDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleModel>(entity));
+            throw new NotImplementedException();
         }
 
 
-        public async Task<VehicleModelDTO> GetAsync(Guid id)
+        public Task<VehicleModelDTO> GetAsync(Guid id)
         {
-            return mapper.Map<VehicleModelDTO>(await genericRepository.GetAsync<VehicleModel>(id));
+            throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateAsync(VehicleModelDTO entity)
+        public Task<int> UpdateAsync(VehicleModelDTO entity)
         {
-            return await genericRepository.UpdateAsync(mapper.Map<VehicleModel>(entity));
+            throw new NotImplementedException();
         }
     }
 }
