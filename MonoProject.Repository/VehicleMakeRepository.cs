@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -20,35 +21,36 @@ namespace MonoProject.Repository
             this.mapper = mapper;
             this.genericRepository = genericRepository;
         }
-        public Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
+        public async Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> AddAsync(VehicleMakeDTO entity)
+        public async Task<int> AddAsync(VehicleMakeDTO entity)
         {
-            throw new NotImplementedException();
+            entity.Id = Guid.NewGuid();
+            return await genericRepository.AddAsync(mapper.Map<VehicleMake>(entity));
         }
 
-        public Task<int> DeleteAsync(Guid id)
+        public async Task<int> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await genericRepository.DeleteAsync(mapper.Map<VehicleMake>(id));
         }
 
-        public Task<int> DeleteAsync(VehicleMakeDTO entity)
+        public async Task<int> DeleteAsync(VehicleMakeDTO entity)
         {
-            throw new NotImplementedException();
+            return await genericRepository.DeleteAsync(mapper.Map<VehicleMake>(entity));
         }
 
 
-        public Task<VehicleMakeDTO> GetAsync(Guid id)
+        public async Task<VehicleMakeDTO> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return mapper.Map<VehicleMakeDTO>(await genericRepository.GetAsync<VehicleMake>(id));
         }
 
-        public Task<int> UpdateAsync(VehicleMakeDTO entity)
+        public async Task<int> UpdateAsync(VehicleMakeDTO entity)
         {
-            throw new NotImplementedException();
+            return await genericRepository.UpdateAsync(mapper.Map<VehicleMake>(entity));
         }
     }
 }
