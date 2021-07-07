@@ -1,23 +1,36 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
+using MonoProject.MVC.Models;
+using MonoProject.Service.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MonoProject.MVC.Controllers
 {
     public class VehicleMakeController : Controller
     {
+        private readonly IMapper mapper;
+        private readonly IVehicleMakeService vehicleMakeService;
+
+        public VehicleMakeController(IMapper mapper, IVehicleMakeService vehicleMakeService)
+        {
+            this.mapper = mapper;
+            this.vehicleMakeService = vehicleMakeService;
+        }
+
         // GET: VehicleMakeController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             return View();
         }
 
         // GET: VehicleMakeController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(Guid id)
         {
+            var result = await vehicleMakeService.GetAsync(id);
             return View();
         }
 
@@ -30,32 +43,34 @@ namespace MonoProject.MVC.Controllers
         // POST: VehicleMakeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(VehicleMakeViewModel vehicleMakeViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await vehicleMakeService.AddAsync(mapper.Map<VehicleMakeDTO>(vehicleMakeViewModel));
+                return RedirectToAction(nameof(VehicleMake));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(VehicleMake));
             }
         }
 
         // GET: VehicleMakeController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(Guid id)
         {
-            return View();
+            return View(mapper.Map<VehicleMakeViewModel>(await vehicleMakeService.GetAsync(id)));
         }
 
         // POST: VehicleMakeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(VehicleMakeViewModel vehicleMakeViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await vehicleMakeService.UpdateAsync(mapper.Map<VehicleMakeDTO>(vehicleMakeViewModel));
+                return RedirectToAction(nameof(VehicleMake));
             }
             catch
             {
@@ -64,19 +79,20 @@ namespace MonoProject.MVC.Controllers
         }
 
         // GET: VehicleMakeController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            return View();
+            return View(mapper.Map<VehicleMakeViewModel>(await vehicleMakeService.GetAsync(id)));
         }
 
         // POST: VehicleMakeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(VehicleMakeViewModel vehicleMakeViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await vehicleMakeService.DeleteAsync(mapper.Map<VehicleMakeDTO>(vehicleMakeViewModel));
+                return RedirectToAction(nameof(VehicleMake));
             }
             catch
             {
