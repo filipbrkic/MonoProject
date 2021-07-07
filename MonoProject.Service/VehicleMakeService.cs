@@ -22,7 +22,7 @@ namespace MonoProject.Service
             return await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
         }
 
-        public async Task<int> AddAsync(VehicleModelDTO entity)
+        public async Task<int> AddAsync(VehicleMakeDTO entity)
         {
             return await vehicleMakeService.AddAsync(entity);
         }
@@ -32,18 +32,18 @@ namespace MonoProject.Service
             return await vehicleMakeService.DeleteAsync(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleModelDTO entity)
+        public async Task<int> DeleteAsync(VehicleMakeDTO entity)
         {
             return await vehicleMakeService.DeleteAsync(entity);
         }
 
 
-        public async Task<VehicleModelDTO> GetAsync(Guid id)
+        public async Task<VehicleMakeDTO> GetAsync(Guid id)
         {
             return await vehicleMakeService.GetAsync(id);
         }
 
-        public async Task<int> UpdateAsync(VehicleModelDTO entity)
+        public async Task<int> UpdateAsync(VehicleMakeDTO entity)
         {
             return await vehicleMakeService.UpdateAsync(entity);
         }
