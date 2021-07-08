@@ -42,17 +42,6 @@ namespace MonoProject.MVC
 
             services.AddControllersWithViews();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
-
             Service.DependencyBindings.ConfigureServices(services);
             Repository.DependencyBindings.ConfigureServices(services);
         }
@@ -82,6 +71,7 @@ namespace MonoProject.MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
