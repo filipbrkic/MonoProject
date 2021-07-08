@@ -24,7 +24,7 @@ namespace MonoProject.MVC.Controllers
         }
 
         // GET: VehicleModelController
-        public ActionResult Index()
+        public ActionResult VehicleModel()
         {
             return View();
         }
