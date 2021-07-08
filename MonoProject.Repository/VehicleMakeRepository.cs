@@ -21,7 +21,7 @@ namespace MonoProject.Repository
             this.mapper = mapper;
             this.genericRepository = genericRepository;
         }
-        public Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging)
+        public Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
             throw new NotImplementedException();
         }

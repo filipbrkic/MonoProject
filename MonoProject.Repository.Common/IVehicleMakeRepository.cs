@@ -11,7 +11,7 @@ namespace MonoProject.Repository.Common
     public interface IVehicleMakeRepository
     {
         Task<int> AddAsync(VehicleMakeDTO entity);
-        Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(ISorting sorting, IFiltering filtering, IPaging paging);
+        Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting);
         Task<VehicleMakeDTO> GetAsync(Guid id);
         Task<int> UpdateAsync(VehicleMakeDTO entity);
         Task<int> DeleteAsync(Guid id);
