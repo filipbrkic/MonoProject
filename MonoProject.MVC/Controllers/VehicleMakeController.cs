@@ -6,6 +6,7 @@ using MonoProject.DAL.Models;
 using MonoProject.MVC.Models;
 using MonoProject.Service.Common;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonoProject.MVC.Controllers
@@ -22,9 +23,24 @@ namespace MonoProject.MVC.Controllers
         }
 
         // GET: VehicleMakeController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> VehicleMake(string sortOrder, string sortBy, string searchBy, string search, int? pageNumber, int? pageSize)
         {
-            return View();
+            var paging = new Paging(pageNumber, pageSize);
+
+            sortOrder = string.IsNullOrEmpty(sortOrder) ? "asc" : sortOrder;
+            ViewBag.Sorting = sortOrder;
+            ViewBag.SortBy = sortBy;
+            ViewBag.Search = !string.IsNullOrEmpty(search) ? search : "";
+            ViewBag.SearchBy = !string.IsNullOrEmpty(searchBy) ? searchBy : "Name";
+            ViewBag.CurrentPage = paging.PageNumber;
+            ViewBag.PageSize = paging.PageSize;
+
+            var result = await vehicleMakeService.GetAllAsync(new Filtering(searchBy, search), paging, new Sorting(sortOrder, sortBy));
+
+            var pageCount = paging.TotalItemsCount / paging.PageSize;
+            ViewBag.TotalPageCount = paging.TotalItemsCount % paging.PageSize == 0 ? pageCount : pageCount + 1;
+
+            return View(mapper.Map<IEnumerable<VehicleMakeViewModel>>(result));
         }
 
         // GET: VehicleMakeController/Details/5
