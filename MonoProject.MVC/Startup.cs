@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MonoProject.DAL.Data;
+using MonoProject.MVC.Mapper;
+using MonoProject.Service;
+using MonoProject.Service.Common;
+using System;
 
 namespace MonoProject.MVC
 {
@@ -23,11 +28,33 @@ namespace MonoProject.MVC
             services.AddDbContext<VehicleDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ModelMappings());
+            });
+            var mapper = config.CreateMapper();
+
+            services.AddAutoMapper(typeof(ModelMappings));
+
             services.AddControllersWithViews();
 
             services.AddRazorPages();
 
             services.AddControllersWithViews();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            Service.DependencyBindings.ConfigureServices(services);
+            Repository.DependencyBindings.ConfigureServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
