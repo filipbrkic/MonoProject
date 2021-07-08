@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
 using System.Collections.Generic;
@@ -25,30 +26,31 @@ namespace MonoProject.Repository
             throw new NotImplementedException();
         }
 
-        public Task<int> AddAsync(VehicleModelDTO entity)
+        public async Task<int> AddAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            entity.Id = Guid.NewGuid();
+            return await genericRepository.AddAsync(mapper.Map<VehicleModel>(entity));
         }
 
-        public Task<int> DeleteAsync(Guid id)
+        public async Task<int> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await genericRepository.DeleteAsync<VehicleModel>(id);
         }
 
-        public Task<int> DeleteAsync(VehicleModelDTO entity)
+        public async Task<int> DeleteAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            return await genericRepository.DeleteAsync(mapper.Map<VehicleModel>(entity));
         }
 
 
-        public Task<VehicleModelDTO> GetAsync(Guid id)
+        public async Task<VehicleModelDTO> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return mapper.Map<VehicleModelDTO>(await genericRepository.GetAsync<VehicleModel>(id));
         }
 
-        public Task<int> UpdateAsync(VehicleModelDTO entity)
+        public async Task<int> UpdateAsync(VehicleModelDTO entity)
         {
-            throw new NotImplementedException();
+            return await genericRepository.UpdateAsync(mapper.Map<VehicleModel>(entity));
         }
     }
 }
