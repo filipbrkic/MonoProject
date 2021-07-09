@@ -6,6 +6,7 @@ using MonoProject.Repository.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +22,32 @@ namespace MonoProject.Repository
             this.mapper = mapper;
             this.genericRepository = genericRepository;
         }
-        public Task<IEnumerable<VehicleModelDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
+        public async Task<IEnumerable<VehicleModelDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
-            throw new NotImplementedException();
+            var result = await genericRepository.GetAllAsync<VehicleModel>(CreateFilterExpression(filtering.Search, filtering.SearchBy), CreateOrderByExpression(sorting.SortBy), paging.PageSize, paging.Skip, sorting.SortOrder);
+            paging.TotalItemsCount = result.Item2;
+            return mapper.Map<IEnumerable<VehicleModelDTO>>(result.Item1);
+        }
+        private static Expression<Func<VehicleModel, bool>> CreateFilterExpression(string search, string searchBy)
+        {
+            if (!string.IsNullOrEmpty(search))
+            {
+                return v => searchBy == "Name" ?
+                v.Name.IndexOf(search) > -1 :
+                v.Abrv.IndexOf(search) > -1;
+            }
+            return x => x.Name.StartsWith(String.Empty);
+        }
+        private static Expression<Func<VehicleModel, string>> CreateOrderByExpression(string sortBy)
+        {
+            if (sortBy == "Name" || sortBy == null)
+            {
+                return v => v.Name;
+            }
+            else
+            {
+                return v => v.Abrv;
+            }
         }
 
         public async Task<int> AddAsync(VehicleModelDTO entity)
