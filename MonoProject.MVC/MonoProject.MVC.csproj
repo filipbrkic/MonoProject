@@ -23,11 +23,14 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MonoProject.Common\MonoProject.Common.csproj" />
     <ProjectReference Include="..\MonoProject.DAL\MonoProject.DAL.csproj" />
+    <ProjectReference Include="..\MonoProject.Repository\MonoProject.Repository.csproj" />
+    <ProjectReference Include="..\MonoProject.Service\MonoProject.Service.csproj" />
   </ItemGroup>
 
 </Project>

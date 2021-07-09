@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonoProject.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace MonoProject.Common.Models
     {
         public Guid Id { get; set; }
         public Guid MakeId { get; set; }
+        public string MakeName { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
     }

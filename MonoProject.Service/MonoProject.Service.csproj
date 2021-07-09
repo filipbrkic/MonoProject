@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MonoProject.Repository.Common\MonoProject.Repository.Common.csproj" />
     <ProjectReference Include="..\MonoProject.Service.Common\MonoProject.Service.Common.csproj" />
   </ItemGroup>
 
