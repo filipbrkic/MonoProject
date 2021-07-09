@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using MonoProject.DAL.Data;
 using MonoProject.Repository.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,9 +19,13 @@ namespace MonoProject.Repository
             this.vehicleDbContext = vehicleDbContext;
         }
 
-        public async Task<(IEnumerable<T>, int)> GetAllAsync<T>(Expression<Func<T, bool>> match, Expression<Func<T, string>> orderByExpression, int take, int skip, string sortType) where T : class
+        public async Task<(IEnumerable<T>, int)> GetAllAsync<T>(Expression<Func<T, bool>> match, Expression<Func<T, string>> orderByExpression, int take, int skip, string sortOrder) where T : class
         {
-            throw new NotImplementedException();
+            var vehicle = sortOrder == "asc" ?
+                await vehicleDbContext.Set<T>().AsNoTracking().Where(match).OrderBy(orderByExpression).Skip(skip).Take(take).ToListAsync() :
+                await vehicleDbContext.Set<T>().AsNoTracking().Where(match).OrderByDescending(orderByExpression).Skip(skip).Take(take).ToListAsync();
+            var vehicleCount = vehicleDbContext.Set<T>().Where(match).AsNoTracking().Count();
+            return (vehicle, vehicleCount);
         }
 
         public async Task<int> AddAsync<T>(T entity) where T : class
