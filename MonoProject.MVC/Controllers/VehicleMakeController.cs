@@ -21,6 +21,7 @@ namespace MonoProject.MVC.Controllers
         }
 
         // GET: VehicleMakeController
+        [HttpGet("VehicleMake", Name = "get-vehiclemake")]
         public async Task<ActionResult> VehicleMake(string sortOrder, string sortBy, string searchBy, string search, int? pageNumber, int? pageSize)
         {
             var paging = new Paging(pageNumber, pageSize);
