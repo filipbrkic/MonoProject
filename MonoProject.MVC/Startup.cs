@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MonoProject.DAL.Data;
 using MonoProject.MVC.Mapper;
-using MonoProject.Service;
-using MonoProject.Service.Common;
-using System;
 
 namespace MonoProject.MVC
 {

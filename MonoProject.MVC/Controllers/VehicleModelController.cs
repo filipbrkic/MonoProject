@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MonoProject.Common.Models;
-using MonoProject.DAL.Models;
 using MonoProject.MVC.Models;
 using MonoProject.Service.Common;
 using System;

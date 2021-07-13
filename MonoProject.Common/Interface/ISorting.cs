@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MonoProject.Common.Interface
+﻿namespace MonoProject.Common.Interface
 {
     public interface ISorting
     {
