@@ -35,7 +35,7 @@ namespace MonoProject.MVC
             services.AddControllersWithViews();
 
             services.AddRazorPages();
-
+            
             services.AddControllersWithViews();
 
             Service.DependencyBindings.ConfigureServices(services);
