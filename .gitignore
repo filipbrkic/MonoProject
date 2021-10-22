@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 MonoProject.MVC/bin
 MonoProject.MVC/obj
+MonoProject.sln
+MonoProject.DAL/Migrations/20210703121337_InitialMigration.cs
