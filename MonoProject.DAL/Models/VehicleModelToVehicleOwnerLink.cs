@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MonoProject.DAL.Models
 {
@@ -8,9 +7,8 @@ namespace MonoProject.DAL.Models
         public Guid ModelId { get; set; }
         public Guid OwnerId { get; set; }
         public Guid RegistrationId { get; set; }
-
-        public List<VehicleModel> VehicleModels { get; set; }
+        public VehicleModel VehicleModel { get; set; }
         public VehicleRegistration VehicleRegistration { get; set; }
-        public List<VehicleOwner> VehicleOwners { get; set; }
+        public VehicleOwner VehicleOwner { get; set; }
     }
 }

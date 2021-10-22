@@ -10,6 +10,6 @@ namespace MonoProject.DAL.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public List<VehicleModelToVehicleOwnerLink> vehicleModelToVehicleOwnerLinks { get; set; }
+        public List<VehicleModelToVehicleOwnerLink> VehicleModelToVehicleOwnerLinks { get; set; }
     }
 }

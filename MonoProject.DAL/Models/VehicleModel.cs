@@ -13,5 +13,5 @@ namespace MonoProject.DAL.Models
         public VehicleMake VehicleMake { get; set; }
         public VehicleEngineType VehicleEngineType { get; set; }
         public List<VehicleModelToVehicleOwnerLink> VehicleModelToVehicleOwnerLinks { get; set; }
-}
+    }
 }
