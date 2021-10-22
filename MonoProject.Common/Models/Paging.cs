@@ -19,6 +19,6 @@ namespace MonoProject.Common.Models
             }
             set { }
         }
-        public int TotalItemsCount {get;set;}
+        public int TotalItemsCount { get; set; }
     }
 }
