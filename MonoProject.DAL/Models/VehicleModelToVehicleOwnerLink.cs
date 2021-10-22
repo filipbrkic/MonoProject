@@ -9,7 +9,7 @@ namespace MonoProject.DAL.Models
         public Guid OwnerId { get; set; }
         public Guid RegistrationId { get; set; }
 
-        public VehicleModel VehicleModel { get; set; }
+        public List<VehicleModel> VehicleModels { get; set; }
         public VehicleRegistration VehicleRegistration { get; set; }
         public List<VehicleOwner> VehicleOwners { get; set; }
     }
