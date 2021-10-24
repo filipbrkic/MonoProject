@@ -36,7 +36,6 @@ namespace MonoProject.Service
             return await vehicleModelRepository.DeleteAsync(entity);
         }
 
-
         public async Task<VehicleModelDTO> GetAsync(Guid id)
         {
             return await vehicleModelRepository.GetAsync(id);
