@@ -2,7 +2,7 @@
 
 namespace MonoProject.Common.Models
 {
-    class VehicleEngineType
+    public class VehicleEngineTypeDTO
     {
         public Guid Id { get; set; }
         public string Type { get; set; }
