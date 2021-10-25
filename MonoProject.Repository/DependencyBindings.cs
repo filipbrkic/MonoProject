@@ -9,10 +9,10 @@ namespace MonoProject.Repository
         {
             services.AddTransient<IVehicleMakeRepository, VehicleMakeRepository>();
             services.AddTransient<IVehicleModelRepository, VehicleModelRepository>();
-            services.AddTransient<IGenericRepository, GenericRepository>();
             services.AddTransient<IVehicleOwnerRepository, VehicleOwnerRepository>();
             services.AddTransient<IVehicleRegistrationRepository, VehicleRegistrationRepository>();
             services.AddTransient<IVehicleEngineTypeRepository, VehicleEngineTypeRepository>();
+            services.AddTransient<IGenericRepository, GenericRepository>();
         }
     }
 }
