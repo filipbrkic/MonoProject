@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MonoProject.API.Controllers
 {
     [ApiController]
-    [Route("api/vehiclemake/")]
+    [Route("api/vehiclemake")]
     public class VehicleMakeController : ControllerBase
     {
         private readonly IVehicleMakeService vehicleMakeService;
@@ -41,9 +41,9 @@ namespace MonoProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllVehicleMake([FromQuery] VehicleParams vehicleParams)
         {
-            var filtering = new Filtering(vehicleParams.searchBy, vehicleParams.search);
-            var paging = new Paging(vehicleParams.pageNumber, vehicleParams.pageSize);
-            var sorting = new Sorting(vehicleParams.sortOrder, vehicleParams.sortyBy);
+            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
+            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
+            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
 
 
             var vehicleMake = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
@@ -72,7 +72,7 @@ namespace MonoProject.API.Controllers
             }
 
             var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleGet);
-
+            vehicleMake.Name = "up";
             await vehicleMakeService.UpdateAsync(vehicleMake);
 
 
