@@ -2,7 +2,7 @@
 
 namespace MonoProject.Common.Models
 {
-    public class VehicleModelToVehicleOwnerLink
+    public class VehicleModelToVehicleOwnerLinkDTO
     {
         public Guid ModelId { get; set; }
         public Guid OwnerId { get; set; }
