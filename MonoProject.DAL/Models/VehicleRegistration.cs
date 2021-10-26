@@ -7,6 +7,6 @@ namespace MonoProject.DAL.Models
         public Guid Id { get; set; }
         public string RegistrationNumber { get; set; }
 
-        public VehicleModelToVehicleOwnerLink vehicleModelToVehicleOwnerLink { get; set; }
+        public VehicleModelToVehicleOwnerLink VehicleModelToVehicleOwnerLink { get; set; }
     }
 }

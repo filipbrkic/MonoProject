@@ -10,7 +10,7 @@ using MonoProject.DAL.Data;
 namespace MonoProject.DAL.Migrations
 {
     [DbContext(typeof(VehicleDbContext))]
-    [Migration("20211022142233_InitialMigration")]
+    [Migration("20211025130450_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,12 +72,9 @@ namespace MonoProject.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("VehicleMakeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleMakeId");
+                    b.HasIndex("MakeId");
 
                     b.ToTable("VehicleModels");
                 });
@@ -152,7 +149,9 @@ namespace MonoProject.DAL.Migrations
                 {
                     b.HasOne("MonoProject.DAL.Models.VehicleMake", "VehicleMake")
                         .WithMany("VehicleModels")
-                        .HasForeignKey("VehicleMakeId");
+                        .HasForeignKey("MakeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("VehicleMake");
                 });
@@ -172,7 +171,7 @@ namespace MonoProject.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("MonoProject.DAL.Models.VehicleRegistration", "VehicleRegistration")
-                        .WithOne("vehicleModelToVehicleOwnerLink")
+                        .WithOne("VehicleModelToVehicleOwnerLink")
                         .HasForeignKey("MonoProject.DAL.Models.VehicleModelToVehicleOwnerLink", "RegistrationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -203,7 +202,7 @@ namespace MonoProject.DAL.Migrations
 
             modelBuilder.Entity("MonoProject.DAL.Models.VehicleRegistration", b =>
                 {
-                    b.Navigation("vehicleModelToVehicleOwnerLink");
+                    b.Navigation("VehicleModelToVehicleOwnerLink");
                 });
 #pragma warning restore 612, 618
         }

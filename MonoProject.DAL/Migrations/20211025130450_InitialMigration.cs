@@ -54,18 +54,17 @@ namespace MonoProject.DAL.Migrations
                     MakeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Abrv = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EngineTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VehicleMakeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    EngineTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleModels_VehicleMakes_VehicleMakeId",
-                        column: x => x.VehicleMakeId,
+                        name: "FK_VehicleModels_VehicleMakes_MakeId",
+                        column: x => x.MakeId,
                         principalTable: "VehicleMakes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,9 +118,9 @@ namespace MonoProject.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleModels_VehicleMakeId",
+                name: "IX_VehicleModels_MakeId",
                 table: "VehicleModels",
-                column: "VehicleMakeId");
+                column: "MakeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleModelToVehicleOwnerLinks_ModelId",

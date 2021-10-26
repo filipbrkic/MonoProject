@@ -5,7 +5,7 @@ namespace MonoProject.API.Models
     public class VehicleParams
     {
         public Guid Id { get; set; }
-        public Guid VehicleMakeId { get; set; }
+        public Guid MakeId { get; set; }
         public Guid EngineTypeId { get; set; }
         public Guid ModelId { get; set; }
         public Guid OwnerId { get; set; }
