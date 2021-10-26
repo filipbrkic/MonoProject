@@ -5,6 +5,7 @@ using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
+using System.Dynamic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -26,6 +27,7 @@ namespace MonoProject.API.Controllers
             this.vehicleMakeService = vehicleMakeService;
             this.context = context;
         }
+
         [HttpGet("{Id}", Name = "GetVehicleModel")]
         public async Task<IActionResult> GetVehicleModel(Guid id)
         {
@@ -46,19 +48,26 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
             var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
 
+            dynamic obj = new ExpandoObject();
+            obj.VehicleModel = await vehicleModelService.GetAllAsync(filtering, paging, sorting);
+            obj.Filtering = filtering;
+            obj.Pagination = paging;
+            obj.Sorting = sorting;
 
-            var vehicleModel = await vehicleModelService.GetAllAsync(filtering, paging, sorting);
-            return Ok(JsonSerializer.Serialize(vehicleModel));
+            return Ok(JsonSerializer.Serialize(obj));
         }
 
         [HttpPost]
         public async Task<ActionResult<VehicleModelDTO>> PostVehicleModel([FromQuery] VehicleParams vehicleParams)
         {
             var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleParams);
-            vehicleModel.MakeId = vehicleParams.VehicleMakeId;
+             vehicleParams.MakeId = Guid.Parse("2e610838-939a-4ccc-84ba-dc6221c1dff9");
+           // vehicleParams.EngineTypeId = Guid.Parse("a2aff1b3-56ad-407d-a89d-9bde174a1177");
+            vehicleModel.MakeId = vehicleParams.MakeId;
+            vehicleModel.EngineTypeId = vehicleParams.EngineTypeId;
             await vehicleModelService.AddAsync(vehicleModel);
 
-            return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id }, vehicleModel);
+            return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, vehicleParams.MakeId, vehicleParams.EngineTypeId }, vehicleModel);
         }
 
         [HttpPut("{Id}")]

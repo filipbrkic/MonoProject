@@ -5,6 +5,7 @@ using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
+using System.Dynamic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -45,21 +46,22 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
             var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
 
+            dynamic obj = new ExpandoObject();
+            obj.VehicleOwner = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting);
+            obj.Filtering = filtering;
+            obj.Pagination = paging;
+            obj.Sorting = sorting;
 
-            var vehicleOwner = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting);
-            return Ok(JsonSerializer.Serialize(vehicleOwner));
+            return Ok(JsonSerializer.Serialize(obj));
         }
 
         [HttpPost]
         public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwner([FromQuery] VehicleParams vehicleParams)
         {
-            vehicleParams.Id = Guid.NewGuid();
-            var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(vehicleParams);
             var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleParams);
-            vehicleOwner.Id = vehicleLink.ModelId;
-            await vehicleOwnerService.AddAsync(vehicleOwner, vehicleLink);
+            await vehicleOwnerService.AddAsync(vehicleOwner);
 
-            return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id, vehicleLink.ModelId }, vehicleOwner);
+            return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id }, vehicleOwner);
         }
 
         [HttpPut("{Id}")]
@@ -77,7 +79,6 @@ namespace MonoProject.API.Controllers
             var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleGet);
 
             await vehicleOwnerService.UpdateAsync(vehicleOwner);
-
 
             return NoContent();
         }

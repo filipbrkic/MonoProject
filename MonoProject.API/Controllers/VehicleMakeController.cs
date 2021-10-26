@@ -5,6 +5,7 @@ using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
+using System.Dynamic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -45,9 +46,13 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
             var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
 
+            dynamic obj = new ExpandoObject();
+            obj.VehicleMake = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
+            obj.Filtering = filtering;
+            obj.Pagination = paging;
+            obj.Sorting = sorting;
 
-            var vehicleMake = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
-            return Ok(JsonSerializer.Serialize(vehicleMake));
+            return Ok(JsonSerializer.Serialize(obj));
         }
 
         [HttpPost]
