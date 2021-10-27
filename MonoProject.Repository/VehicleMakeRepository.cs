@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
+using MonoProject.DAL.Data;
 using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
@@ -14,11 +15,13 @@ namespace MonoProject.Repository
     {
         private readonly IMapper mapper;
         private readonly IGenericRepository genericRepository;
+        private readonly VehicleDbContext context;
 
-        public VehicleMakeRepository(IMapper mapper, IGenericRepository genericRepository)
+        public VehicleMakeRepository(IMapper mapper, IGenericRepository genericRepository, VehicleDbContext context)
         {
             this.mapper = mapper;
             this.genericRepository = genericRepository;
+            this.context = context;
         }
         public async Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
@@ -72,6 +75,7 @@ namespace MonoProject.Repository
 
         public async Task<int> UpdateAsync(VehicleMakeDTO entity)
         {
+            context.ChangeTracker.Clear();
             return await genericRepository.UpdateAsync(mapper.Map<VehicleMake>(entity));
         }
     }
