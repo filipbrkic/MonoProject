@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace MonoProject.Repository.Common
 {
@@ -9,6 +10,6 @@ namespace MonoProject.Repository.Common
         IVehicleRegistrationRepository VehicleRegistrationRepository { get; }
         IVehicleModelToVehicleOwnerLinkRepository VehicleModelToVehicleOwnerLinkRepository { get; }
 
-        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }
