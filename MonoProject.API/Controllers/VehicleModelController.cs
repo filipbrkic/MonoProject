@@ -18,18 +18,16 @@ namespace MonoProject.API.Controllers
         private readonly IVehicleModelService vehicleModelService;
         private readonly IMapper mapper;
         private readonly IVehicleMakeService vehicleMakeService;
-        private readonly VehicleDbContext context;
 
-        public VehicleModelController(IVehicleModelService vehicleModelService, IMapper mapper, IVehicleMakeService vehicleMakeService, VehicleDbContext context)
+        public VehicleModelController(IVehicleModelService vehicleModelService, IMapper mapper, IVehicleMakeService vehicleMakeService)
         {
             this.vehicleModelService = vehicleModelService;
             this.mapper = mapper;
             this.vehicleMakeService = vehicleMakeService;
-            this.context = context;
         }
 
         [HttpGet("{Id}", Name = "GetVehicleModel")]
-        public async Task<IActionResult> GetVehicleModel(Guid id)
+        public async Task<IActionResult> GetVehicleModelAsync(Guid id)
         {
             var vehicleModel = await vehicleModelService.GetAsync(id);
 
@@ -42,11 +40,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleModel([FromQuery] VehicleParams vehicleParams)
+        public async Task<IActionResult> GetAllVehicleModelAsync([FromQuery] ModelParams modelParams)
         {
-            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
-            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
-            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
+            var filtering = new Filtering(modelParams.SearchBy, modelParams.Search);
+            var paging = new Paging(modelParams.PageNumber, modelParams.PageSize);
+            var sorting = new Sorting(modelParams.SortOrder, modelParams.SortyBy);
 
             dynamic obj = new ExpandoObject();
             obj.VehicleModel = await vehicleModelService.GetAllAsync(filtering, paging, sorting);
@@ -58,24 +56,22 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<VehicleModelDTO>> PostVehicleModel([FromQuery] VehicleParams vehicleParams)
+        public async Task<ActionResult<VehicleModelDTO>> PostVehicleModelAsync([FromQuery] ModelParams modelParams)
         {
-            var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleParams);
-             vehicleParams.MakeId = Guid.Parse("2e610838-939a-4ccc-84ba-dc6221c1dff9");
-           // vehicleParams.EngineTypeId = Guid.Parse("a2aff1b3-56ad-407d-a89d-9bde174a1177");
-            vehicleModel.MakeId = vehicleParams.MakeId;
-            vehicleModel.EngineTypeId = vehicleParams.EngineTypeId;
+            var vehicleModel = mapper.Map<VehicleModelDTO>(modelParams);
+
+            vehicleModel.MakeId = modelParams.MakeId;
+            vehicleModel.EngineTypeId = modelParams.EngineTypeId;
             await vehicleModelService.AddAsync(vehicleModel);
 
-            return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, vehicleParams.MakeId, vehicleParams.EngineTypeId }, vehicleModel);
+            return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, modelParams.MakeId, modelParams.EngineTypeId }, vehicleModel);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleModel(Guid id)
+        public async Task<IActionResult> UpdateVehicleModelAsync(Guid id)
         {
 
             var vehicleGet = await vehicleModelService.GetAsync(id);
-            context.ChangeTracker.Clear();
 
             if (vehicleGet == null)
             {
@@ -91,7 +87,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleModel(Guid id)
+        public async Task<ActionResult> DeleteVehicleModelAsync(Guid id)
         {
             await vehicleModelService.DeleteAsync(id);
 

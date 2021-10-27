@@ -17,17 +17,15 @@ namespace MonoProject.API.Controllers
     {
         private readonly IVehicleMakeService vehicleMakeService;
         private readonly IMapper mapper;
-        private readonly VehicleDbContext context;
 
-        public VehicleMakeController(IVehicleMakeService vehicleMakeService, IMapper mapper, VehicleDbContext context)
+        public VehicleMakeController(IVehicleMakeService vehicleMakeService, IMapper mapper)
         {
             this.vehicleMakeService = vehicleMakeService;
             this.mapper = mapper;
-            this.context = context;
         }
 
         [HttpGet("{Id}", Name = "GetVehicleMake")]
-        public async Task<IActionResult> GetVehicleMake(Guid id)
+        public async Task<IActionResult> GetVehicleMakeAsync(Guid id)
         {
             var vehicleMake = await vehicleMakeService.GetAsync(id);
 
@@ -40,11 +38,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleMake([FromQuery] VehicleParams vehicleParams)
+        public async Task<IActionResult> GetAllVehicleMakeAsync([FromQuery] MakeParams makeParams)
         {
-            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
-            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
-            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
+            var filtering = new Filtering(makeParams.SearchBy, makeParams.Search);
+            var paging = new Paging(makeParams.PageNumber, makeParams.PageSize);
+            var sorting = new Sorting(makeParams.SortOrder, makeParams.SortyBy);
 
             dynamic obj = new ExpandoObject();
             obj.VehicleMake = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
@@ -56,20 +54,19 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<VehicleMakeDTO>> PostVehicleMake([FromQuery] VehicleParams vehicleParams)
+        public async Task<ActionResult<VehicleMakeDTO>> PostVehicleMakeAsync([FromQuery] MakeParams makeParams)
         {
-            var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleParams);
+            var vehicleMake = mapper.Map<VehicleMakeDTO>(makeParams);
             await vehicleMakeService.AddAsync(vehicleMake);
 
             return CreatedAtRoute("GetVehicleMake", new { id = vehicleMake.Id }, vehicleMake);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleMake(Guid id)
+        public async Task<IActionResult> UpdateVehicleMakeAsync(Guid id)
         {
 
             var vehicleGet = await vehicleMakeService.GetAsync(id);
-            context.ChangeTracker.Clear();
 
             if (vehicleGet == null)
             {
@@ -77,7 +74,6 @@ namespace MonoProject.API.Controllers
             }
 
             var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleGet);
-            vehicleMake.Name = "up";
             await vehicleMakeService.UpdateAsync(vehicleMake);
 
 
@@ -85,7 +81,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleMake(Guid id)
+        public async Task<ActionResult> DeleteVehicleMakeAsync(Guid id)
         {
             await vehicleMakeService.DeleteAsync(id);
 

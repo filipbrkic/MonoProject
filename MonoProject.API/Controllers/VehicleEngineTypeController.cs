@@ -24,7 +24,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet("{Id}", Name = "GetVehicleEngineTypeController")]
-        public async Task<IActionResult> GetVehicleEngineTypeController(Guid id)
+        public async Task<IActionResult> GetVehicleEngineTypeAsync(Guid id)
         {
             var vehicleRegistration = await vehicleEngineTypeService.GetAsync(id);
 
@@ -37,11 +37,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleEngineTypeController([FromQuery] VehicleParams vehicleParams)
+        public async Task<IActionResult> GetAllVehicleEngineTypeAsync([FromQuery] EngineTypeParams engineTypeParams)
         {
-            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
-            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
-            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
+            var filtering = new Filtering(engineTypeParams.SearchBy, engineTypeParams.Search);
+            var paging = new Paging(engineTypeParams.PageNumber, engineTypeParams.PageSize);
+            var sorting = new Sorting(engineTypeParams.SortOrder, engineTypeParams.SortyBy);
 
             dynamic obj = new ExpandoObject();
             obj.VehicleOwner = await vehicleEngineTypeService.GetAllAsync(filtering, paging, sorting);

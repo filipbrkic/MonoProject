@@ -17,17 +17,15 @@ namespace MonoProject.API.Controllers
     {
         private readonly IVehicleOwnerService vehicleOwnerService;
         private readonly IMapper mapper;
-        private readonly VehicleDbContext context;
 
-        public VehicleOwnerController(IVehicleOwnerService vehicleOwnerService, IMapper mapper, VehicleDbContext context)
+        public VehicleOwnerController(IVehicleOwnerService vehicleOwnerService, IMapper mapper)
         {
             this.vehicleOwnerService = vehicleOwnerService;
             this.mapper = mapper;
-            this.context = context;
         }
 
         [HttpGet("{Id}", Name = "GetVehicleOwner")]
-        public async Task<IActionResult> GetVehicleOwner(Guid id)
+        public async Task<IActionResult> GetVehicleOwnerAsync(Guid id)
         {
             var vehicleOwner = await vehicleOwnerService.GetAsync(id);
 
@@ -40,11 +38,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleOwner([FromQuery] VehicleParams vehicleParams)
+        public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
-            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
-            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
-            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
+            var filtering = new Filtering(ownerParams.SearchBy, ownerParams.Search);
+            var paging = new Paging(ownerParams.PageNumber, ownerParams.PageSize);
+            var sorting = new Sorting(ownerParams.SortOrder, ownerParams.SortyBy);
 
             dynamic obj = new ExpandoObject();
             obj.VehicleOwner = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting);
@@ -56,20 +54,19 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwner([FromQuery] VehicleParams vehicleParams)
+        public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
-            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleParams);
+            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(ownerParams);
             await vehicleOwnerService.AddAsync(vehicleOwner);
 
             return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id }, vehicleOwner);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleOwner(Guid id)
+        public async Task<IActionResult> UpdateVehicleOwnerAsync(Guid id)
         {
 
             var vehicleGet = await vehicleOwnerService.GetAsync(id);
-            context.ChangeTracker.Clear();
 
             if (vehicleGet == null)
             {
@@ -84,7 +81,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleOwner(Guid id)
+        public async Task<ActionResult> DeleteVehicleOwnerAsync(Guid id)
         {
             await vehicleOwnerService.DeleteAsync(id);
 

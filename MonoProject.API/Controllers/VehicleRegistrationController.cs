@@ -17,17 +17,15 @@ namespace MonoProject.API.Controllers
     {
         private readonly IVehicleRegistrationService vehicleRegistrationService;
         private readonly IMapper mapper;
-        private readonly VehicleDbContext context;
 
-        public VehicleRegistrationController(IVehicleRegistrationService vehicleRegistrationService, IMapper mapper, VehicleDbContext context)
+        public VehicleRegistrationController(IVehicleRegistrationService vehicleRegistrationService, IMapper mapper)
         {
             this.vehicleRegistrationService = vehicleRegistrationService;
             this.mapper = mapper;
-            this.context = context;
         }
 
         [HttpGet("{Id}", Name = "GetVehicleRegistration")]
-        public async Task<IActionResult> GetVehicleRegistration(Guid id)
+        public async Task<IActionResult> GetVehicleRegistrationAsync(Guid id)
         {
             var vehicleRegistration = await vehicleRegistrationService.GetAsync(id);
 
@@ -40,11 +38,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleRegistration([FromQuery] VehicleParams vehicleParams)
+        public async Task<IActionResult> GetAllVehicleRegistrationAsync([FromQuery] RegistrationParams registrationParams)
         {
-            var filtering = new Filtering(vehicleParams.SearchBy, vehicleParams.Search);
-            var paging = new Paging(vehicleParams.PageNumber, vehicleParams.PageSize);
-            var sorting = new Sorting(vehicleParams.SortOrder, vehicleParams.SortyBy);
+            var filtering = new Filtering(registrationParams.SearchBy, registrationParams.Search);
+            var paging = new Paging(registrationParams.PageNumber, registrationParams.PageSize);
+            var sorting = new Sorting(registrationParams.SortOrder, registrationParams.SortyBy);
 
             dynamic obj = new ExpandoObject();
             obj.VehicleOwner = await vehicleRegistrationService.GetAllAsync(filtering, paging, sorting);
@@ -56,21 +54,19 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<VehicleRegistrationDTO>> PostVehicleRegistration([FromQuery] VehicleParams vehicleParams)
+        public async Task<ActionResult<VehicleRegistrationDTO>> PostVehicleRegistrationAsync([FromQuery] RegistrationParams registrationParams)
         {
-            var vehicleRegistration = mapper.Map<VehicleRegistrationDTO>(vehicleParams);
-            vehicleRegistration.RegistrationNumber = "d";
+            var vehicleRegistration = mapper.Map<VehicleRegistrationDTO>(registrationParams);
             await vehicleRegistrationService.AddAsync(vehicleRegistration);
 
             return CreatedAtRoute("GetVehicleRegistration", new { id = vehicleRegistration.Id }, vehicleRegistration);
         }
 
         [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleRegistration(Guid id)
+        public async Task<IActionResult> UpdateVehicleRegistrationAsync(Guid id)
         {
 
             var vehicleGet = await vehicleRegistrationService.GetAsync(id);
-            context.ChangeTracker.Clear();
 
             if (vehicleGet == null)
             {
@@ -84,7 +80,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleRegistration(Guid id)
+        public async Task<ActionResult> DeleteVehicleRegistrationAsync(Guid id)
         {
             await vehicleRegistrationService.DeleteAsync(id);
 
