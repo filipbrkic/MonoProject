@@ -2,6 +2,7 @@
 using MonoProject.DAL.Data;
 using MonoProject.Repository.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace MonoProject.Repository
 {
@@ -74,9 +75,9 @@ namespace MonoProject.Repository
             }
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
         public void Dispose()
         {
