@@ -62,7 +62,8 @@ namespace MonoProject.API.Controllers
             vehicleModel.MakeId = modelParams.MakeId;
             vehicleModel.EngineTypeId = modelParams.EngineTypeId;
 
-            // vehicleModel.MakeId = Guid.Parse("cd7d3728-281f-4e5e-b31d-a8a087500bde");   FOR TESTING POST METHOD WITH POSTMAN
+            vehicleModel.MakeId = Guid.Parse("42f67225-9f32-4375-90d7-d5de0544f3a1");
+            vehicleModel.EngineTypeId = Guid.Parse("5d3dd068-f321-4e35-8f87-91d9c23845e0");
             await vehicleModelService.AddAsync(vehicleModel);
 
             return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, modelParams.MakeId, modelParams.EngineTypeId }, vehicleModel);
@@ -80,7 +81,8 @@ namespace MonoProject.API.Controllers
             }
 
             var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleGet);
-
+            // vehicleModel.Name = "x";
+            // vehicleModel.Abrv = "y";
             await vehicleModelService.UpdateAsync(vehicleModel);
 
 

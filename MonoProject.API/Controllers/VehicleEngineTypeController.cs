@@ -51,5 +51,14 @@ namespace MonoProject.API.Controllers
 
             return Ok(JsonSerializer.Serialize(obj));
         }
+
+        [HttpPost]
+        public async Task<ActionResult<VehicleEngineTypeDTO>> PostVehicleMakeAsync([FromQuery] EngineTypeParams engineTypeParams)
+        {
+            var vehicleEngineType = mapper.Map<VehicleEngineTypeDTO>(engineTypeParams);
+            await vehicleEngineTypeService.AddAsync(vehicleEngineType);
+
+            return CreatedAtRoute("GetVehicleEngineTypeController", new { id = vehicleEngineType.Id }, vehicleEngineType);
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace MonoProject.Service
         {
             return await vehiceEngineTypeRepository.GetAsync(id);
         }
+
+        public async Task<int> AddAsync(VehicleEngineTypeDTO entity)
+        {
+            return await vehiceEngineTypeRepository.AddAsync(entity);
+        }
     }
 }

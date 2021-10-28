@@ -8,6 +8,19 @@ namespace MonoProject.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "VehicleEngineTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Abrv = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleEngineTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VehicleMakes",
                 columns: table => new
                 {
@@ -60,28 +73,15 @@ namespace MonoProject.DAL.Migrations
                 {
                     table.PrimaryKey("PK_VehicleModels", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_VehicleModels_VehicleEngineTypes_EngineTypeId",
+                        column: x => x.EngineTypeId,
+                        principalTable: "VehicleEngineTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_VehicleModels_VehicleMakes_MakeId",
                         column: x => x.MakeId,
                         principalTable: "VehicleMakes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VehicleEngineTypes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Abrv = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VehicleEngineTypes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VehicleEngineTypes_VehicleModels_Id",
-                        column: x => x.Id,
-                        principalTable: "VehicleModels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -118,6 +118,12 @@ namespace MonoProject.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_VehicleModels_EngineTypeId",
+                table: "VehicleModels",
+                column: "EngineTypeId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VehicleModels_MakeId",
                 table: "VehicleModels",
                 column: "MakeId");
@@ -137,9 +143,6 @@ namespace MonoProject.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "VehicleEngineTypes");
-
-            migrationBuilder.DropTable(
                 name: "VehicleModelToVehicleOwnerLinks");
 
             migrationBuilder.DropTable(
@@ -150,6 +153,9 @@ namespace MonoProject.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "VehicleRegistrations");
+
+            migrationBuilder.DropTable(
+                name: "VehicleEngineTypes");
 
             migrationBuilder.DropTable(
                 name: "VehicleMakes");

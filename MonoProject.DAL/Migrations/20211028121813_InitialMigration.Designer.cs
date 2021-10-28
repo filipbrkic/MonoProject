@@ -10,7 +10,7 @@ using MonoProject.DAL.Data;
 namespace MonoProject.DAL.Migrations
 {
     [DbContext(typeof(VehicleDbContext))]
-    [Migration("20211025130450_InitialMigration")]
+    [Migration("20211028121813_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,7 @@ namespace MonoProject.DAL.Migrations
             modelBuilder.Entity("MonoProject.DAL.Models.VehicleEngineType", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Abrv")
@@ -73,6 +74,9 @@ namespace MonoProject.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EngineTypeId")
+                        .IsUnique();
 
                     b.HasIndex("MakeId");
 
@@ -134,24 +138,21 @@ namespace MonoProject.DAL.Migrations
                     b.ToTable("VehicleRegistrations");
                 });
 
-            modelBuilder.Entity("MonoProject.DAL.Models.VehicleEngineType", b =>
+            modelBuilder.Entity("MonoProject.DAL.Models.VehicleModel", b =>
                 {
-                    b.HasOne("MonoProject.DAL.Models.VehicleModel", "VehicleModel")
-                        .WithOne("VehicleEngineType")
-                        .HasForeignKey("MonoProject.DAL.Models.VehicleEngineType", "Id")
+                    b.HasOne("MonoProject.DAL.Models.VehicleEngineType", "VehicleEngineType")
+                        .WithOne("VehicleModel")
+                        .HasForeignKey("MonoProject.DAL.Models.VehicleModel", "EngineTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("VehicleModel");
-                });
-
-            modelBuilder.Entity("MonoProject.DAL.Models.VehicleModel", b =>
-                {
                     b.HasOne("MonoProject.DAL.Models.VehicleMake", "VehicleMake")
                         .WithMany("VehicleModels")
                         .HasForeignKey("MakeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("VehicleEngineType");
 
                     b.Navigation("VehicleMake");
                 });
@@ -183,6 +184,11 @@ namespace MonoProject.DAL.Migrations
                     b.Navigation("VehicleRegistration");
                 });
 
+            modelBuilder.Entity("MonoProject.DAL.Models.VehicleEngineType", b =>
+                {
+                    b.Navigation("VehicleModel");
+                });
+
             modelBuilder.Entity("MonoProject.DAL.Models.VehicleMake", b =>
                 {
                     b.Navigation("VehicleModels");
@@ -190,8 +196,6 @@ namespace MonoProject.DAL.Migrations
 
             modelBuilder.Entity("MonoProject.DAL.Models.VehicleModel", b =>
                 {
-                    b.Navigation("VehicleEngineType");
-
                     b.Navigation("VehicleModelToVehicleOwnerLinks");
                 });
 

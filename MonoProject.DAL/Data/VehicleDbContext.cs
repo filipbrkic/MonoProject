@@ -19,7 +19,7 @@ namespace MonoProject.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VehicleModel>().HasOne(m => m.VehicleMake).WithMany(o => o.VehicleModels).HasForeignKey(e => e.MakeId);
-            modelBuilder.Entity<VehicleModel>().HasOne(m => m.VehicleEngineType).WithOne(o => o.VehicleModel).HasForeignKey<VehicleEngineType>(e => e.Id);
+            modelBuilder.Entity<VehicleEngineType>().HasOne(m => m.VehicleModel).WithOne(o => o.VehicleEngineType).HasForeignKey<VehicleModel>(e => e.EngineTypeId);
             modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasKey(x => new { x.OwnerId, x.ModelId, x.RegistrationId });
             modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasOne(m => m.VehicleModel).WithMany(o => o.VehicleModelToVehicleOwnerLinks)
                 .HasForeignKey(x => x.ModelId);

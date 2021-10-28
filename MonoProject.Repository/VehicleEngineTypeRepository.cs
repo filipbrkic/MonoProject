@@ -53,5 +53,11 @@ namespace MonoProject.Repository
         {
             return mapper.Map<VehicleEngineTypeDTO>(await genericRepository.GetAsync<VehicleEngineType>(id));
         }
+
+        public async Task<int> AddAsync(VehicleEngineTypeDTO entity)
+        {
+            entity.Id = Guid.NewGuid();
+            return await genericRepository.AddAsync(mapper.Map<VehicleEngineType>(entity));
+        }
     }
 }
