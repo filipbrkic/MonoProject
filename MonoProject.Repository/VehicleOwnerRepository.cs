@@ -54,7 +54,6 @@ namespace MonoProject.Repository
 
         public async Task<int> AddAsync(VehicleOwnerDTO entity)
         {
-            entity.Id = Guid.NewGuid();
             return await genericRepository.AddAsync(mapper.Map<VehicleOwner>(entity));
         }
 

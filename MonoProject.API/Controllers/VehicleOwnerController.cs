@@ -56,10 +56,14 @@ namespace MonoProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
+            ownerParams.Id = Guid.NewGuid();
+            ownerParams.OwnerId = Guid.NewGuid();
+            ownerParams.Id = ownerParams.OwnerId;
             var vehicleOwner = mapper.Map<VehicleOwnerDTO>(ownerParams);
-            await vehicleOwnerService.AddAsync(vehicleOwner);
+            var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(ownerParams);
+            await vehicleOwnerService.AddAsync(vehicleOwner, vehicleLink);
 
-            return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id }, vehicleOwner);
+            return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id, vehicleLink.OwnerId }, (vehicleOwner, vehicleLink));
         }
 
         [HttpPut("{Id}")]

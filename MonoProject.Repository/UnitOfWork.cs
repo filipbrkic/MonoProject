@@ -75,14 +75,15 @@ namespace MonoProject.Repository
             }
         }
 
-        public async Task SaveChangesAsync()
-        {
-            await context.SaveChangesAsync();
-        }
         public void Dispose()
         {
             context.Dispose();
             GC.SuppressFinalize(this);
+        } 
+
+        public async Task SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
         }
-    }
+    } 
 }

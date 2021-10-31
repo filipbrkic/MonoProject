@@ -10,6 +10,6 @@ namespace MonoProject.Repository.Common
         IVehicleRegistrationRepository VehicleRegistrationRepository { get; }
         IVehicleModelToVehicleOwnerLinkRepository VehicleModelToVehicleOwnerLinkRepository { get; }
 
-        Task SaveChangesAsync();
+       Task SaveChangesAsync();
     }
 }

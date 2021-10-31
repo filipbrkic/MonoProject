@@ -23,10 +23,11 @@ namespace MonoProject.DAL.Data
             modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasKey(x => new { x.OwnerId, x.ModelId, x.RegistrationId });
             modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasOne(m => m.VehicleModel).WithMany(o => o.VehicleModelToVehicleOwnerLinks)
                 .HasForeignKey(x => x.ModelId);
-            modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasOne(m => m.VehicleOwner).WithMany(m => m.VehicleModelToVehicleOwnerLinks)
-                .HasForeignKey(m => m.OwnerId);
+         /*   modelBuilder.Entity<VehicleModelToVehicleOwnerLink>().HasOne<VehicleOwner>(m => m.VehicleOwner).WithMany(m => m.VehicleModelToVehicleOwnerLinks)
+                .HasForeignKey(m => m.OwnerId);     */
             modelBuilder.Entity<VehicleRegistration>().HasOne(m => m.VehicleModelToVehicleOwnerLink).WithOne(o => o.VehicleRegistration)
                 .HasForeignKey<VehicleModelToVehicleOwnerLink>(x => x.RegistrationId);
+            modelBuilder.Entity<VehicleOwner>().HasMany(m => m.VehicleModelToVehicleOwnerLinks).WithOne(o => o.VehicleOwner).HasForeignKey(x => x.OwnerId);
             base.OnModelCreating(modelBuilder);
         }
     }

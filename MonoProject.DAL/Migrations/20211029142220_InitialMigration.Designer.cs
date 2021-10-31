@@ -10,7 +10,7 @@ using MonoProject.DAL.Data;
 namespace MonoProject.DAL.Migrations
 {
     [DbContext(typeof(VehicleDbContext))]
-    [Migration("20211028121813_InitialMigration")]
+    [Migration("20211029142220_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
