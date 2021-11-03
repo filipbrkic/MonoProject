@@ -9,7 +9,7 @@ namespace MonoProject.Service.Common
     public interface IVehicleRegistrationService
     {
         Task<IEnumerable<VehicleRegistrationDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting);
-        Task<int> AddAsync(VehicleRegistrationDTO entity);
+        Task<int> AddAsync(VehicleRegistrationDTO entity, VehicleModelToVehicleOwnerLinkDTO link);
         Task<VehicleRegistrationDTO> GetAsync(Guid id);
         Task<int> UpdateAsync(VehicleRegistrationDTO entity);
         Task<int> DeleteAsync(Guid id);

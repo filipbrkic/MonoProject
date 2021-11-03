@@ -11,15 +11,18 @@ namespace MonoProject.Service
     public class VehicleRegistrationService : IVehicleRegistrationService
     {
         private readonly IVehicleRegistrationRepository vehicleRegistrationRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public VehicleRegistrationService(IVehicleRegistrationRepository vehicleRegistrationRepository)
+        public VehicleRegistrationService(IVehicleRegistrationRepository vehicleRegistrationRepository, IUnitOfWork unitOfWork)
         {
             this.vehicleRegistrationRepository = vehicleRegistrationRepository;
+            this.unitOfWork = unitOfWork;
         }
 
-        public async Task<int> AddAsync(VehicleRegistrationDTO entity)
+        public async Task<int> AddAsync(VehicleRegistrationDTO entity, VehicleModelToVehicleOwnerLinkDTO link)
         {
-            return await vehicleRegistrationRepository.AddAsync(entity);
+            await unitOfWork.VehicleRegistrationRepository.AddAsync(entity);
+            return await unitOfWork.VehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
         }
 
         public async Task<int> DeleteAsync(Guid id)
