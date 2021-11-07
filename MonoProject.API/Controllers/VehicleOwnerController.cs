@@ -38,7 +38,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
+   /*     public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
             var filtering = new Filtering(ownerParams.SearchBy, ownerParams.Search);
             var paging = new Paging(ownerParams.PageNumber, ownerParams.PageSize);
@@ -51,16 +51,15 @@ namespace MonoProject.API.Controllers
             obj.Sorting = sorting;
 
             return Ok(JsonSerializer.Serialize(obj));
-        }
+        }   */
 
         [HttpPost]
         public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
-            ownerParams.Id = Guid.NewGuid();
-            ownerParams.OwnerId = Guid.NewGuid();
-            ownerParams.Id = ownerParams.OwnerId;
             var vehicleOwner = mapper.Map<VehicleOwnerDTO>(ownerParams);
+            vehicleOwner.Id = Guid.NewGuid();
             var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(ownerParams);
+            vehicleLink.OwnerId = vehicleOwner.Id;
             await vehicleOwnerService.AddAsync(vehicleOwner, vehicleLink);
 
             return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id, vehicleLink.OwnerId }, (vehicleOwner, vehicleLink));
