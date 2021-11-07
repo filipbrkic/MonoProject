@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
 using MonoProject.Repository.Common;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MonoProject.Repository
@@ -11,68 +13,42 @@ namespace MonoProject.Repository
         private readonly VehicleDbContext context;
         private readonly IMapper mapper;
         private readonly IGenericRepository genericRepository;
+        private readonly IVehicleModelRepository vehicleModelRepository;
+        private readonly IVehicleOwnerRepository vehicleOwnerRepository;
+        private readonly IVehicleRegistrationRepository vehicleRegistrationRepository;
+        private readonly IVehicleModelToVehicleOwnerLinkRepository vehicleModelToVehicleOwnerLinkRepository;
 
-        public UnitOfWork(VehicleDbContext context, IMapper mapper, IGenericRepository genericRepository)
+        public UnitOfWork(VehicleDbContext context,
+            IMapper mapper,
+            IGenericRepository genericRepository,
+            
+            IVehicleModelRepository vehicleModelRepository,
+            IVehicleOwnerRepository vehicleOwnerRepository,
+            IVehicleRegistrationRepository vehicleRegistrationRepository,
+            IVehicleModelToVehicleOwnerLinkRepository vehicleModelToVehicleOwnerLinkRepository
+            )
         {
             this.context = context;
             this.mapper = mapper;
             this.genericRepository = genericRepository;
+            this.vehicleModelRepository = vehicleModelRepository;
+            this.vehicleOwnerRepository = vehicleOwnerRepository;
+            this.vehicleRegistrationRepository = vehicleRegistrationRepository;
+            this.vehicleModelToVehicleOwnerLinkRepository = vehicleModelToVehicleOwnerLinkRepository;
         }
 
-        private IVehicleModelRepository vehicleModelRepository;
-        public IVehicleModelRepository VehicleModelRepository
+        public async Task<int> AddVehicleAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link)
         {
-            get
-            {
-                if (vehicleModelRepository == null)
-                {
-                    vehicleModelRepository = new VehicleModelRepository(context, mapper, genericRepository);
-                }
+            var addOwner =  await vehicleOwnerRepository.AddAsync(vehicleOwnerDTO);
 
-                return vehicleModelRepository;
-            }
-        }
+            var vehicleRegistrationDTO = new VehicleRegistrationDTO() { Id = Guid.NewGuid(), RegistrationNumber = link.RegistrationNumber };
+            var addRegistration = await vehicleRegistrationRepository.AddAsync(vehicleRegistrationDTO);
 
-        private IVehicleOwnerRepository vehicleOwnerRepository;
-        public IVehicleOwnerRepository VehicleOwnerRepository
-        {
-            get
-            {
-                if (vehicleOwnerRepository == null)
-                {
-                    vehicleOwnerRepository = new VehicleOwnerRepository(context, mapper, genericRepository);
-                }
+            link.ModelId = Guid.Parse("669e4649-3651-4b2f-a645-8c46d351b99d");
+            link.RegistrationId = vehicleRegistrationDTO.Id;
+            var addLink = await vehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
 
-                return vehicleOwnerRepository;
-            }
-        }
-
-        private IVehicleRegistrationRepository vehicleRegistrationRepository;
-        public IVehicleRegistrationRepository VehicleRegistrationRepository
-        {
-            get
-            {
-                if (vehicleRegistrationRepository == null)
-                {
-                    vehicleRegistrationRepository = new VehicleRegistrationRepository(context, mapper, genericRepository);
-                }
-
-                return vehicleRegistrationRepository;
-            }
-        }
-
-        private IVehicleModelToVehicleOwnerLinkRepository vehicleModelToVehicleOwnerLinkRepository;
-        public IVehicleModelToVehicleOwnerLinkRepository VehicleModelToVehicleOwnerLinkRepository
-        {
-            get
-            {
-                if (vehicleModelToVehicleOwnerLinkRepository == null)
-                {
-                    vehicleModelToVehicleOwnerLinkRepository = new VehicleModelToVehicleOwnerLinkRepository(context, mapper, genericRepository);
-                }
-
-                return vehicleModelToVehicleOwnerLinkRepository;
-            }
+            return addOwner;
         }
 
         public void Dispose()
@@ -80,10 +56,5 @@ namespace MonoProject.Repository
             context.Dispose();
             GC.SuppressFinalize(this);
         } 
-
-        public async Task SaveChangesAsync()
-        {
-            await context.SaveChangesAsync();
-        }
     } 
 }
