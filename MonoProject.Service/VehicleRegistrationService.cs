@@ -21,8 +21,7 @@ namespace MonoProject.Service
 
         public async Task<int> AddAsync(VehicleRegistrationDTO entity, VehicleModelToVehicleOwnerLinkDTO link)
         {
-            await unitOfWork.VehicleRegistrationRepository.AddAsync(entity);
-            return await unitOfWork.VehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
+            return await vehicleRegistrationRepository.AddAsync(entity);
         }
 
         public async Task<int> DeleteAsync(Guid id)

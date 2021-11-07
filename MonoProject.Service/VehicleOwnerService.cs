@@ -11,41 +11,42 @@ namespace MonoProject.Service
     public class VehicleOwnerService : IVehicleOwnerService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IVehicleOwnerRepository vehicleOwnerRepository;
 
-        public VehicleOwnerService(IUnitOfWork unitOfWork)
+        public VehicleOwnerService(IUnitOfWork unitOfWork, IVehicleOwnerRepository vehicleOwnerRepository)
         {
             this.unitOfWork = unitOfWork;
+            this.vehicleOwnerRepository = vehicleOwnerRepository;
         }
 
         public async Task<int> AddAsync(VehicleOwnerDTO entity, VehicleModelToVehicleOwnerLinkDTO link)
         {
-            await unitOfWork.VehicleOwnerRepository.AddAsync(entity);
-            return await unitOfWork.VehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
+            return await unitOfWork.AddVehicleAsync(entity, link);
         }
 
         public async Task<int> DeleteAsync(Guid id)
         {
-            return await unitOfWork.VehicleOwnerRepository.DeleteAsync(id);
+            return await vehicleOwnerRepository.DeleteAsync(id);
         }
 
         public async Task<int> DeleteAsync(VehicleOwnerDTO entity)
         {
-            return await unitOfWork.VehicleOwnerRepository.DeleteAsync(entity);
+            return await vehicleOwnerRepository.DeleteAsync(entity);
         }
 
         public async Task<IEnumerable<VehicleOwnerDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
-            return await unitOfWork.VehicleOwnerRepository.GetAllAsync(filtering, paging, sorting);
+            return await vehicleOwnerRepository.GetAllAsync(filtering, paging, sorting);
         }
 
         public async Task<VehicleOwnerDTO> GetAsync(Guid id)
         {
-            return await unitOfWork.VehicleOwnerRepository.GetAsync(id);
+            return await vehicleOwnerRepository.GetAsync(id);
         }
 
         public async Task<int> UpdateAsync(VehicleOwnerDTO entity)
         {
-            return await unitOfWork.VehicleOwnerRepository.UpdateAsync(entity);
+            return await vehicleOwnerRepository.UpdateAsync(entity);
         }
     }
 }
