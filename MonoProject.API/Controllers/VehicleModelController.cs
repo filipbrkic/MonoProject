@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
-using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
 using System.Dynamic;
@@ -62,8 +61,8 @@ namespace MonoProject.API.Controllers
             vehicleModel.MakeId = modelParams.MakeId;
             vehicleModel.EngineTypeId = modelParams.EngineTypeId;
 
-          //  vehicleModel.MakeId = Guid.Parse("42f67225-9f32-4375-90d7-d5de0544f3a1");
-          //  vehicleModel.EngineTypeId = Guid.Parse("5d3dd068-f321-4e35-8f87-91d9c23845e0");       USED FOR TESTING IN POSTMAN
+           // vehicleModel.MakeId = Guid.Parse("d3d7cde9-e980-4764-9230-f5c38a85ebda");
+           // vehicleModel.EngineTypeId = Guid.Parse("5d3dd068-f321-4e35-8f87-91d9c23845e0"); FOR TESTING IN POSTMAN
             await vehicleModelService.AddAsync(vehicleModel);
 
             return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, modelParams.MakeId, modelParams.EngineTypeId }, vehicleModel);
