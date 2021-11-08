@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
-using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
 using System.Dynamic;

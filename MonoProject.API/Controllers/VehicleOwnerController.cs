@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
-using MonoProject.DAL.Data;
 using MonoProject.Service.Common;
 using System;
 using System.Dynamic;
@@ -38,7 +37,7 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpGet]
-   /*     public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
+        public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
         {
             var filtering = new Filtering(ownerParams.SearchBy, ownerParams.Search);
             var paging = new Paging(ownerParams.PageNumber, ownerParams.PageSize);
@@ -51,7 +50,7 @@ namespace MonoProject.API.Controllers
             obj.Sorting = sorting;
 
             return Ok(JsonSerializer.Serialize(obj));
-        }   */
+        }   
 
         [HttpPost]
         public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
