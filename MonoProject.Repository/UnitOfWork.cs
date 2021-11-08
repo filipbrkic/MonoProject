@@ -44,11 +44,12 @@ namespace MonoProject.Repository
             var vehicleRegistrationDTO = new VehicleRegistrationDTO() { Id = Guid.NewGuid(), RegistrationNumber = link.RegistrationNumber };
             var addRegistration = await vehicleRegistrationRepository.AddAsync(vehicleRegistrationDTO);
 
-            link.ModelId = Guid.Parse("669e4649-3651-4b2f-a645-8c46d351b99d");
             link.RegistrationId = vehicleRegistrationDTO.Id;
+            link.ModelId = Guid.Parse("669e4649-3651-4b2f-a645-8c46d351b99d");        //FOR TESTING WITH POSTMAN
             var addLink = await vehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
+            var results = addOwner & addRegistration & addLink;
 
-            return addOwner;
+            return Convert.ToBoolean(results) ? 1 : 0;
         }
 
         public void Dispose()
