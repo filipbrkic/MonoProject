@@ -16,7 +16,6 @@ namespace MonoProject.Repository
             services.AddTransient<IGenericRepository, GenericRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IVehicleModelToVehicleOwnerLinkRepository, VehicleModelToVehicleOwnerLinkRepository>();
-            services.AddDbContext<VehicleDbContext>(ServiceLifetime.Transient);
         }
     }
 }
