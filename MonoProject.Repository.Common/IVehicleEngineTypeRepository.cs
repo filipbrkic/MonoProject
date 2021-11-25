@@ -11,5 +11,7 @@ namespace MonoProject.Repository.Common
         Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting);
         Task<VehicleEngineTypeDTO> GetAsync(Guid id);
         Task<int> AddAsync(VehicleEngineTypeDTO entity);
+        Task<int> DeleteAsync(Guid id);
+        Task<int> DeleteAsync(VehicleEngineTypeDTO entity);
     }
 }

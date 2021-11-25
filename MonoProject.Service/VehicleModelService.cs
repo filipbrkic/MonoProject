@@ -10,10 +10,12 @@ namespace MonoProject.Service
 {
     public class VehicleModelService : IVehicleModelService
     {
+        private readonly IUnitOfWork unitOfWork;
         private readonly IVehicleModelRepository vehicleModelRepository;
 
-        public VehicleModelService(IVehicleModelRepository vehicleModelRepository)
+        public VehicleModelService(IUnitOfWork unitOfWork, IVehicleModelRepository vehicleModelRepository)
         {
+            this.unitOfWork = unitOfWork;
             this.vehicleModelRepository = vehicleModelRepository;
         }
         public async Task<IEnumerable<VehicleModelDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
@@ -21,14 +23,14 @@ namespace MonoProject.Service
             return await vehicleModelRepository.GetAllAsync(filtering, paging, sorting);
         }
 
-        public async Task<int> AddAsync(VehicleModelDTO entity)
+        public async Task<int> AddAsync(VehicleModelDTO vehicleModel, VehicleEngineTypeDTO vehicleEngineType)
         {
-            return await vehicleModelRepository.AddAsync(entity);
+            return await unitOfWork.AddVehicleModelAsync(vehicleModel, vehicleEngineType);
         }
 
         public async Task<int> DeleteAsync(Guid id)
         {
-            return await vehicleModelRepository.DeleteAsync(id);
+            return await unitOfWork.DeleteVehicleModelAsync(id);
         }
 
         public async Task<int> DeleteAsync(VehicleModelDTO entity)

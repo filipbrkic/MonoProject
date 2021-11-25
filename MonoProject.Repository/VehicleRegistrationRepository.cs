@@ -66,6 +66,11 @@ namespace MonoProject.Repository
         {
             return await genericRepository.DeleteAsync(mapper.Map<VehicleRegistration>(entity));
         }
+        
+        public async Task<int> BulkDeleteAsync(Expression<Func<VehicleRegistration, bool>> match)
+        {
+            return await genericRepository.BulkDeleteAsync<VehicleRegistration>(match);
+        }
 
         public async Task<VehicleRegistrationDTO> GetAsync(Guid id)
         {

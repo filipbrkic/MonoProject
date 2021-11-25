@@ -1,7 +1,9 @@
 ﻿using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MonoProject.Repository.Common
@@ -14,5 +16,6 @@ namespace MonoProject.Repository.Common
         Task<int> UpdateAsync(VehicleRegistrationDTO entity);
         Task<int> DeleteAsync(Guid id);
         Task<int> DeleteAsync(VehicleRegistrationDTO entity);
+        Task<int> BulkDeleteAsync(Expression<Func<VehicleRegistration, bool>> match);
     }
 }

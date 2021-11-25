@@ -21,12 +21,12 @@ namespace MonoProject.Service
 
         public async Task<int> AddAsync(VehicleOwnerDTO entity, VehicleModelToVehicleOwnerLinkDTO link)
         {
-            return await unitOfWork.AddVehicleAsync(entity, link);
+            return await unitOfWork.AddVehicleOwnerAsync(entity, link);
         }
 
         public async Task<int> DeleteAsync(Guid id)
         {
-            return await vehicleOwnerRepository.DeleteAsync(id);
+            return await unitOfWork.DeleteVehicleOwnerAsync(id);
         }
 
         public async Task<int> DeleteAsync(VehicleOwnerDTO entity)

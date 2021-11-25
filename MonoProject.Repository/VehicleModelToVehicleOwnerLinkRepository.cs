@@ -4,6 +4,8 @@ using MonoProject.DAL.Data;
 using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MonoProject.Repository
@@ -21,6 +23,16 @@ namespace MonoProject.Repository
             this.genericRepository = genericRepository;
         }
 
+        public async Task<IEnumerable<VehicleModelToVehicleOwnerLinkDTO>> GetAllAsync(Expression<Func<VehicleModelToVehicleOwnerLink, bool>> ownerMatch)
+        {
+            return mapper.Map<IEnumerable<VehicleModelToVehicleOwnerLinkDTO>>(await genericRepository.GetAllAsync<VehicleModelToVehicleOwnerLink>(ownerMatch));
+        }
+
+        public async Task<VehicleModelToVehicleOwnerLinkDTO> GetAsync(Guid id)
+        {
+            return mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(await genericRepository.GetAsync<VehicleModelToVehicleOwnerLink>(id));
+        }
+
         public async Task<int> AddAsync(VehicleModelToVehicleOwnerLinkDTO entity)
         {
             return await genericRepository.AddAsync(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
@@ -34,6 +46,11 @@ namespace MonoProject.Repository
         public async Task<int> DeleteAsync(VehicleModelToVehicleOwnerLinkDTO entity)
         {
             return await genericRepository.DeleteAsync(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
+        }
+
+        public async Task<int> DeleteRangeAsync(IEnumerable<VehicleModelToVehicleOwnerLinkDTO> entity)
+        {
+            return await genericRepository.DeleteRangeAsync<VehicleModelToVehicleOwnerLinkDTO>(entity);
         }
     }
 }

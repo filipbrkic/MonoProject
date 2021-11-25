@@ -19,6 +19,12 @@ namespace MonoProject.Repository
             this.vehicleDbContext = vehicleDbContext;
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> match) where T : class
+        {
+            var vehicle = await vehicleDbContext.Set<T>().AsNoTracking().Where(match).ToListAsync();
+            return vehicle;
+        }
+
         public async Task<(IEnumerable<T>, int)> GetAllAsync<T>(Expression<Func<T, bool>> match, Expression<Func<T, string>> orderByExpression, int take, int skip, string sortOrder) where T : class
         {
             var vehicle = sortOrder == "asc" ?
@@ -44,6 +50,18 @@ namespace MonoProject.Repository
         public async Task<int> DeleteAsync<T>(T entity) where T : class
         {
             vehicleDbContext.Set<T>().Remove(entity);
+            return await vehicleDbContext.SaveChangesAsync();
+        }
+        public async Task<int> DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class
+        {
+            vehicleDbContext.Set<T>().RemoveRange(entities);
+            return await vehicleDbContext.SaveChangesAsync();
+        }
+
+        public async Task<int> BulkDeleteAsync<T>(Expression<Func<T, bool>> match) where T : class
+        {
+            var registrations = await vehicleDbContext.Set<T>().Where(match).ToListAsync();
+            vehicleDbContext.RemoveRange(registrations);
             return await vehicleDbContext.SaveChangesAsync();
         }
 
