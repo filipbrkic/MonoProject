@@ -58,12 +58,13 @@ namespace MonoProject.API.Controllers
         public async Task<ActionResult<VehicleModelDTO>> PostVehicleModelAsync([FromQuery] ModelParams modelParams)
         {
             var vehicleModel = mapper.Map<VehicleModelDTO>(modelParams);
+            vehicleModel.Id = Guid.NewGuid();
             vehicleModel.MakeId = modelParams.MakeId;
             vehicleModel.EngineTypeId = modelParams.EngineTypeId;
+            var vehicleEngineType = mapper.Map<VehicleEngineTypeDTO>(modelParams);
+            vehicleEngineType.Id = Guid.NewGuid();
 
-           // vehicleModel.MakeId = Guid.Parse("d3d7cde9-e980-4764-9230-f5c38a85ebda");
-           // vehicleModel.EngineTypeId = Guid.Parse("5d3dd068-f321-4e35-8f87-91d9c23845e0"); FOR TESTING IN POSTMAN
-            await vehicleModelService.AddAsync(vehicleModel);
+            await vehicleModelService.AddAsync(vehicleModel, vehicleEngineType);
 
             return CreatedAtRoute("GetVehicleMake", new { id = vehicleModel.Id, modelParams.MakeId, modelParams.EngineTypeId }, vehicleModel);
         }
