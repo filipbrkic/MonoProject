@@ -55,6 +55,7 @@ namespace MonoProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleRegistrationDTO>> PostVehicleRegistrationAsync([FromQuery] RegistrationParams registrationParams)
         {
+            registrationParams.Id = Guid.NewGuid();
             var vehicleRegistration = mapper.Map<VehicleRegistrationDTO>(registrationParams);
             var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(registrationParams);
             await vehicleRegistrationService.AddAsync(vehicleRegistration, vehicleLink);
