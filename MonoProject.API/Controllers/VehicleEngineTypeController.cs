@@ -55,6 +55,7 @@ namespace MonoProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleEngineTypeDTO>> PostVehicleMakeAsync([FromQuery] EngineTypeParams engineTypeParams)
         {
+            engineTypeParams.Id = Guid.NewGuid();
             var vehicleEngineType = mapper.Map<VehicleEngineTypeDTO>(engineTypeParams);
             await vehicleEngineTypeService.AddAsync(vehicleEngineType);
 
