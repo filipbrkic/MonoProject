@@ -81,8 +81,6 @@ namespace MonoProject.API.Controllers
             }
 
             var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleGet);
-            // vehicleModel.Name = "x";
-            // vehicleModel.Abrv = "y";         USED FOR TESTING IN POSTMAN
             await vehicleModelService.UpdateAsync(vehicleModel);
 
 
