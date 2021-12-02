@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.DAL", "MonoProject.DAL\MonoProject.DAL.csproj", "{BCF20ED7-C79E-437F-8663-1DDF34270276}"
 EndProject
@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoProject.API", "MonoProj
 		{C2079EB5-5038-4F6F-9126-D068C2AD2E0C} = {C2079EB5-5038-4F6F-9126-D068C2AD2E0C}
 		{BCF20ED7-C79E-437F-8663-1DDF34270276} = {BCF20ED7-C79E-437F-8663-1DDF34270276}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoProject.React", "MonoProject.React", "{8B420263-AF0A-47AD-B52F-B7223C9FE98F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
