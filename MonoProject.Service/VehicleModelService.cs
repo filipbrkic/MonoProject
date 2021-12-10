@@ -23,9 +23,9 @@ namespace MonoProject.Service
             return await vehicleModelRepository.GetAllAsync(filtering, paging, sorting);
         }
 
-        public async Task<int> AddAsync(VehicleModelDTO vehicleModel, VehicleEngineTypeDTO vehicleEngineType)
+        public async Task<int> AddAsync(VehicleModelDTO vehicleModel)
         {
-            return await unitOfWork.AddVehicleModelAsync(vehicleModel, vehicleEngineType);
+            return await vehicleModelRepository.AddAsync(vehicleModel);
         }
 
         public async Task<int> DeleteAsync(Guid id)

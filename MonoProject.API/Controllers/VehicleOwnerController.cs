@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MonoProject.API.Controllers
 {
     [ApiController]
-    [Route("api/vehicleowner")]
+    [Route("[controller]")]
     public class VehicleOwnerController : ControllerBase
     {
         private readonly IVehicleOwnerService vehicleOwnerService;
@@ -23,71 +23,71 @@ namespace MonoProject.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{Id}", Name = "GetVehicleOwner")]
-        public async Task<IActionResult> GetVehicleOwnerAsync(Guid id)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetVehicleOwnerAsync([FromQuery] Guid id)
         {
             var vehicleOwner = await vehicleOwnerService.GetAsync(id);
 
             if (vehicleOwner == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             return Ok(mapper.Map<VehicleOwnerDTO>(vehicleOwner));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllVehicleOwnerAsync(string searchBy, string search, string sortOrder, string sortBy, int? pageNumber, int? pageSize)
         {
-            var filtering = new Filtering(ownerParams.SearchBy, ownerParams.Search);
-            var paging = new Paging(ownerParams.PageNumber, ownerParams.PageSize);
-            var sorting = new Sorting(ownerParams.SortOrder, ownerParams.SortyBy);
+            var filtering = new Filtering(searchBy, search);
+            var paging = new Paging(pageNumber, pageSize);
+            var sorting = new Sorting(sortOrder, sortBy);
 
-            dynamic obj = new ExpandoObject();
-            obj.VehicleOwner = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting);
-            obj.Filtering = filtering;
-            obj.Pagination = paging;
-            obj.Sorting = sorting;
+            var response = new PagedResult<VehicleOwnerDTO>()
+            {
+                Data = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting),
+                Filtering = filtering,
+                Pagination = paging,
+                Sorting = sorting,
+            };
 
-            return Ok(JsonSerializer.Serialize(obj));
+            return Ok(response);
         }   
 
-        [HttpPost]
-        public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] OwnerParams ownerParams)
+        [HttpPost("[action]")]
+        public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleOwnerAsync([FromQuery] VehicleOwnerDTO vehicleOwnerDTO)
         {
-            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(ownerParams);
-            vehicleOwner.Id = Guid.NewGuid();
-            var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(ownerParams);
-            vehicleLink.OwnerId = vehicleOwner.Id;
-            await vehicleOwnerService.AddAsync(vehicleOwner, vehicleLink);
+            vehicleOwnerDTO.Id = Guid.NewGuid();
+            var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(vehicleOwnerDTO);
+            var result = await vehicleOwnerService.AddAsync(vehicleOwnerDTO, vehicleLink);
 
-            return CreatedAtRoute("GetVehicleOwner", new { id = vehicleOwner.Id, vehicleLink.OwnerId }, (vehicleOwner, vehicleLink));
-        }
-
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleOwnerAsync(Guid id)
-        {
-
-            var vehicleGet = await vehicleOwnerService.GetAsync(id);
-
-            if (vehicleGet == null)
+            if (result == 0)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleGet);
-
-            await vehicleOwnerService.UpdateAsync(vehicleOwner);
-
-            return NoContent();
+            return Ok();
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleOwnerAsync(Guid id)
+        [HttpPut("[action]")]
+        public async Task<IActionResult> UpdateVehicleOwnerAsync([FromBody] VehicleOwnerDTO vehicleOwnerDTO)
+        {
+            var result = await vehicleOwnerService.UpdateAsync(vehicleOwnerDTO);
+
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete("[action]")]
+        public async Task<ActionResult> DeleteVehicleOwnerAsync([FromQuery] Guid id)
         {
             await vehicleOwnerService.DeleteAsync(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

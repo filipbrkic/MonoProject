@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MonoProject.API.Controllers
 {
     [ApiController]
-    [Route("api/vehiclemake")]
+    [Route("[controller]")]
     public class VehicleMakeController : ControllerBase
     {
         private readonly IVehicleMakeService vehicleMakeService;
@@ -23,68 +23,71 @@ namespace MonoProject.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{Id}", Name = "GetVehicleMake")]
-        public async Task<IActionResult> GetVehicleMakeAsync(Guid id)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetVehicleMakeAsync([FromQuery] Guid id)
         {
             var vehicleMake = await vehicleMakeService.GetAsync(id);
 
             if (vehicleMake == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             return Ok(mapper.Map<VehicleMakeDTO>(vehicleMake));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllVehicleMakeAsync([FromQuery] MakeParams makeParams)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllVehicleMakeAsync(string searchBy, string search, string sortOrder, string sortBy, int? pageNumber, int? pageSize)
         {
-            var filtering = new Filtering(makeParams.SearchBy, makeParams.Search);
-            var paging = new Paging(makeParams.PageNumber, makeParams.PageSize);
-            var sorting = new Sorting(makeParams.SortOrder, makeParams.SortyBy);
+            var filtering = new Filtering(searchBy, search);
+            var paging = new Paging(pageNumber, pageSize);
+            var sorting = new Sorting(sortOrder, sortBy);
 
-            dynamic obj = new ExpandoObject();
-            obj.VehicleMake = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
-            obj.Filtering = filtering;
-            obj.Pagination = paging;
-            obj.Sorting = sorting;
+            var response = new PagedResult<VehicleMakeDTO>()
+            {
+                Data = await vehicleMakeService.GetAllAsync(filtering, paging, sorting),
+                Filtering = filtering,
+                Pagination = paging,
+                Sorting = sorting,
+            };
 
-            return Ok(JsonSerializer.Serialize(obj));
+            return Ok(response);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<VehicleMakeDTO>> PostVehicleMakeAsync([FromQuery] MakeParams makeParams)
+        [HttpPut("[action]")]
+        public async Task<ActionResult> PostVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-            var vehicleMake = mapper.Map<VehicleMakeDTO>(makeParams);
-            await vehicleMakeService.AddAsync(vehicleMake);
+            var result = await vehicleMakeService.AddAsync(vehicleMakeDTO);
 
-            return CreatedAtRoute("GetVehicleMake", new { id = vehicleMake.Id }, vehicleMake);
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateVehicleMakeAsync(Guid id)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UpdateVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-
-            var vehicleGet = await vehicleMakeService.GetAsync(id);
+            var vehicleGet = await vehicleMakeService.GetAsync(vehicleMakeDTO.Id);
 
             if (vehicleGet == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleGet);
-            await vehicleMakeService.UpdateAsync(vehicleMake);
+            await vehicleMakeService.UpdateAsync(vehicleMakeDTO);
 
-
-            return NoContent();
+            return Ok();
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteVehicleMakeAsync(Guid id)
+        [HttpDelete("[action]")]
+        public async Task<ActionResult> DeleteVehicleMakeAsync([FromQuery] Guid id)
         {
             await vehicleMakeService.DeleteAsync(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

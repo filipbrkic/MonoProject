@@ -8,5 +8,7 @@ namespace MonoProject.Common.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public Guid ModelId { get; set; }
+        public string RegistrationNumber { get; set; }
     }
 }

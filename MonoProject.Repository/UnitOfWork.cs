@@ -76,16 +76,6 @@ namespace MonoProject.Repository
             return 1 & deleteOwnerRegistrations & deleteOwner; 
         }
 
-        public async Task<int> AddVehicleModelAsync(VehicleModelDTO vehicleModelDTO, VehicleEngineTypeDTO vehicleEngineTypeDTO)
-        {
-            var addEngineType = await vehicleEngineTypeRepository.AddAsync(vehicleEngineTypeDTO);
-
-            vehicleModelDTO.EngineTypeId = vehicleEngineTypeDTO.Id;
-            var addModel = await vehicleModelRepository.AddAsync(vehicleModelDTO);
-
-            return addEngineType & addModel;
-        }
-
         public async Task<int> DeleteVehicleModelAsync(Guid id)
         {
             var getModel = await vehicleModelRepository.GetAsync(id);

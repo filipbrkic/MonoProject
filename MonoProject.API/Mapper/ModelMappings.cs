@@ -17,7 +17,6 @@ namespace MonoProject.API.Mapper
             CreateMap<VehicleRegistration, VehicleRegistrationDTO>().ReverseMap();
             CreateMap<VehicleModelToVehicleOwnerLink, VehicleModelToVehicleOwnerLinkDTO>().ReverseMap();
 
-            CreateMap<VehicleMake, MakeParams>().ReverseMap();
             CreateMap<VehicleModel, ModelParams>().ReverseMap();
             CreateMap<VehicleEngineType, EngineTypeParams>().ReverseMap();
             CreateMap<VehicleEngineType, ModelParams>().ReverseMap();
@@ -26,7 +25,6 @@ namespace MonoProject.API.Mapper
             CreateMap<VehicleModelToVehicleOwnerLink, OwnerParams>().ReverseMap();
             CreateMap<VehicleModelToVehicleOwnerLink, RegistrationParams>().ReverseMap();
 
-            CreateMap<VehicleMakeDTO, MakeParams>().ReverseMap();
             CreateMap<VehicleModelDTO, ModelParams>().ReverseMap();
             CreateMap<VehicleEngineTypeDTO, EngineTypeParams>().ReverseMap();
             CreateMap<VehicleEngineTypeDTO, ModelParams>().ReverseMap();

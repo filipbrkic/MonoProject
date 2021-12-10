@@ -30,10 +30,16 @@ namespace MonoProject.API
             services.AddDbContext<VehicleDbContext>(options =>
             {
                 options.UseSqlServer(
-                    @"Data Source=DESKTOP-4VF839S\SQLEXPRESS;Initial Catalog=MonoDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                    @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MonoDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Vehicle Portal", builder => {
+                    builder.WithOrigins("http://localhost:3000/").AllowAnyMethod().AllowAnyHeader();
+                });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MonoProject.API", Version = "v1" });
