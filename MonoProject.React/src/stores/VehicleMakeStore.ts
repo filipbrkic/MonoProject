@@ -3,10 +3,12 @@ import { VehicleMakeDto } from "../common/VehicleMakeDto";
 import VehicleMakeService from "./VehicleMakeService";
 
 class VehicleMakeStore {
-    vehicleMake: (new (VehicleMakeDto: {}, { }: {}) => {}) | undefined;
+    vehicleMakeData = {
+        model: []
+    };
     status = "initial";
     constructor() {
-        makeObservable(this, { vehicleMake: observable, createVehicleMakeAsync: action });
+        makeObservable(this, { vehicleMakeData: observable, createVehicleMakeAsync: action });
     }
 
     createVehicleMakeAsync = async (model: VehicleMakeDto) => {

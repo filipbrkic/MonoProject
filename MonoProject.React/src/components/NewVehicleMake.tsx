@@ -26,7 +26,7 @@ const NewVehicleMake: React.FC = () => {
                     <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
                 </div>
                 <div>
-                    <input id="abrv" type="text" placeholder="Abrv" ref={abrvInputRef} />
+                    <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
                 </div>
                 <button type="submit" >Save</button>
             </form>
