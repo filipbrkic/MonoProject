@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import VehicleMakeStore from "../stores/VehicleMakeStore";
 import { VehicleMakeDto } from "../common/VehicleMakeDto";
 
-const NewVehicleMake: React.FC = (props: any) => {
+const NewVehicleMake: React.FC<{ id: number, name: string, abrv: string }> = (props: any) => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
 

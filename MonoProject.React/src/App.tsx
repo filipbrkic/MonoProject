@@ -2,6 +2,7 @@ import NewVehicleMake from "./components/NewVehicleMake";
 
 
 function App() {
+
   return (
     <NewVehicleMake />
   );
