@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { inject, observer } from "mobx-react";
 import VehicleMakeStore from "../stores/VehicleMakeStore";
+import { VehicleMakeDto } from "../common/VehicleMakeDto";
 
-const NewVehicleMake: React.FC = () => {
+const NewVehicleMake: React.FC = (props: any) => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
 
@@ -12,7 +13,7 @@ const NewVehicleMake: React.FC = () => {
         const enteredName = (nameInputRef.current as HTMLInputElement).value;
         const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
 
-        VehicleMakeStore.createVehicleMakeAsync({
+        props.VehicleMakeStore.createVehicleMakeAsync({
             id: VehicleMakeDto.id,
             name: enteredName,
             abrv: enteredAbrv,
@@ -20,17 +21,15 @@ const NewVehicleMake: React.FC = () => {
     });
 
     return (
-        <div>
-            <form onSubmit={createVehicleMakeHandler}>
-                <div>
-                    <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
-                </div>
-                <div>
-                    <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
-                </div>
-                <button type="submit" >Save</button>
-            </form>
-        </div>
+        <form onSubmit={createVehicleMakeHandler}>
+            <div>
+                <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
+            </div>
+            <div>
+                <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
+            </div>
+            <button type="submit" >Save</button>
+        </form>
     );
 }
 
