@@ -36,8 +36,8 @@ namespace MonoProject.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors(options =>
             {
-                options.AddPolicy("Vehicle Portal", builder => {
-                    builder.WithOrigins("http://localhost:3000/").AllowAnyMethod().AllowAnyHeader();
+                options.AddPolicy("VehiclePortal", builder => {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
             services.AddSwaggerGen(c =>
@@ -58,6 +58,8 @@ namespace MonoProject.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MonoProject.API v1"));
             }
+
+            app.UseCors("VehiclePortal");
 
             app.UseRouting();
 

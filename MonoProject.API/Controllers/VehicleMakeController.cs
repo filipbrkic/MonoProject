@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
-using System.Dynamic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -15,12 +14,10 @@ namespace MonoProject.API.Controllers
     public class VehicleMakeController : ControllerBase
     {
         private readonly IVehicleMakeService vehicleMakeService;
-        private readonly IMapper mapper;
 
-        public VehicleMakeController(IVehicleMakeService vehicleMakeService, IMapper mapper)
+        public VehicleMakeController(IVehicleMakeService vehicleMakeService)
         {
             this.vehicleMakeService = vehicleMakeService;
-            this.mapper = mapper;
         }
 
         [HttpGet("[action]")]
@@ -33,7 +30,7 @@ namespace MonoProject.API.Controllers
                 return BadRequest();
             }
 
-            return Ok(mapper.Map<VehicleMakeDTO>(vehicleMake));
+            return Ok(vehicleMake);
         }
 
         [HttpGet("[action]")]

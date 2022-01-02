@@ -4,8 +4,6 @@ using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
-using System.Dynamic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -33,7 +31,7 @@ namespace MonoProject.API.Controllers
                 return BadRequest();
             }
 
-            return Ok(mapper.Map<VehicleOwnerDTO>(vehicleOwner));
+            return Ok(vehicleOwner);
         }
 
         [HttpGet("[action]")]

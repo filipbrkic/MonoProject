@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
-using System.Dynamic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -15,14 +12,10 @@ namespace MonoProject.API.Controllers
     public class VehicleModelController : ControllerBase
     {
         private readonly IVehicleModelService vehicleModelService;
-        private readonly IMapper mapper;
-        private readonly IVehicleMakeService vehicleMakeService;
 
-        public VehicleModelController(IVehicleModelService vehicleModelService, IMapper mapper, IVehicleMakeService vehicleMakeService)
+        public VehicleModelController(IVehicleModelService vehicleModelService)
         {
             this.vehicleModelService = vehicleModelService;
-            this.mapper = mapper;
-            this.vehicleMakeService = vehicleMakeService;
         }
 
         [HttpGet("[action]")]
