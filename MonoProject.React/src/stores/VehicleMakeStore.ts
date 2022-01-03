@@ -1,10 +1,10 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 import { VehicleMakeDto } from "../common/VehicleMakeDto";
-import post from "./VehicleMakeService";
+import { post, getAll } from "./VehicleMakeService";
 
 class VehicleMakeStore {
     vehicleMakeData = {
-        model: []
+        model: [],
     };
     status = "initial";
     constructor() {
@@ -26,6 +26,23 @@ class VehicleMakeStore {
             })
         }
     }
+
+    getAllVehicleMakeAsync = async () => {
+        try {
+            const data = await getAll();
+            runInAction(() => {
+                this.vehicleMakeData = data;
+            })
+        } catch (error) {
+            runInAction(() => {
+                this.status = "error";
+            })
+        }
+    }
 }
 
 export default new VehicleMakeStore();
+
+function params(params: any) {
+    throw new Error("Function not implemented.");
+}
