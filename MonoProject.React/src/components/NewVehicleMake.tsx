@@ -8,7 +8,6 @@ const NewVehicleMake: React.FC<{ id: number, name: string, abrv: string }> = () 
     const abrvInputRef = useRef<HTMLInputElement>(null);
 
     const createVehicleMakeHandler = (() => {
-        // e.preventDefault();
 
         const enteredName = (nameInputRef.current as HTMLInputElement).value;
         const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
