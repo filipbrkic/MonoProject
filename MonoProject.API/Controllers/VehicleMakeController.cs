@@ -51,7 +51,7 @@ namespace MonoProject.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut("[action]")]
+        [HttpPost("[action]")]
         public async Task<ActionResult> PostVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
             var result = await vehicleMakeService.AddAsync(vehicleMakeDTO);
@@ -64,7 +64,7 @@ namespace MonoProject.API.Controllers
             return Ok();
         }
 
-        [HttpPost("[action]")]
+        [HttpPut("[action]")]
         public async Task<IActionResult> UpdateVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
             var vehicleGet = await vehicleMakeService.GetAsync(vehicleMakeDTO.Id);

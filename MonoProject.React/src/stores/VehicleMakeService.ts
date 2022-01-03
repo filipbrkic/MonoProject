@@ -1,20 +1,19 @@
 import { VehicleMakeDto } from "../common/VehicleMakeDto";
 
-const webApiUrl = "http://localhost:51044/VehicleMake";
-
-const VehicleMakeService: any = () => {
-    const post = async (model: VehicleMakeDto) => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        var options = {
+const post = async (model: VehicleMakeDto) => {
+    try {
+        const response = await fetch("http://localhost:51044/VehicleMake/PostVehicleMake", {
             method: "POST",
-            headers,
-            body: JSON.stringify(model)
-        }
-        const request = new Request(webApiUrl, options);
-        const response = await fetch(request);
+            body: JSON.stringify(model),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        });
         return response;
+    } catch (error) {
+        console.log(error)
     }
-};
+}
 
-export default VehicleMakeService;
+export default post;

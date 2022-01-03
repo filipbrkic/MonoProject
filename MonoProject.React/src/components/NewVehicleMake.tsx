@@ -3,25 +3,25 @@ import { inject, observer } from "mobx-react";
 import VehicleMakeStore from "../stores/VehicleMakeStore";
 import { VehicleMakeDto } from "../common/VehicleMakeDto";
 
-const NewVehicleMake: React.FC<{ id: number, name: string, abrv: string }> = (props: any) => {
+const NewVehicleMake: React.FC<{ id: number, name: string, abrv: string }> = () => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
 
-    const createVehicleMakeHandler = ((e: React.FormEvent<HTMLFormElement>) => (VehicleMakeDto: { id: number, name: string, abrv: string }) => {
-        e.preventDefault();
+    const createVehicleMakeHandler = (() => {
+        // e.preventDefault();
 
         const enteredName = (nameInputRef.current as HTMLInputElement).value;
         const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
 
-        props.VehicleMakeStore.createVehicleMakeAsync({
-            id: VehicleMakeDto.id,
+        VehicleMakeStore.createVehicleMakeAsync({
+            id: null,
             name: enteredName,
-            abrv: enteredAbrv,
+            abrv: enteredAbrv
         })
     });
 
     return (
-        <form onSubmit={createVehicleMakeHandler}>
+        <form onSubmit={() => createVehicleMakeHandler()}>
             <div>
                 <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
             </div>
