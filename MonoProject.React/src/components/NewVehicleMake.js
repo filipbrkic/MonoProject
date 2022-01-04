@@ -1,18 +1,17 @@
 import React, { useRef } from "react";
-import { inject, observer } from "mobx-react";
+import { inject, observer, PropTypes } from "mobx-react";
 import VehicleMakeStore from "../stores/VehicleMakeStore";
-import { VehicleMakeDto } from "../common/VehicleMakeDto";
 
-const NewVehicleMake: React.FC<{ id: number, name: string, abrv: string }> = () => {
-    const nameInputRef = useRef<HTMLInputElement>(null);
-    const abrvInputRef = useRef<HTMLInputElement>(null);
+const NewVehicleMake = (props) => {
+    const nameInputRef = useRef(null);
+    const abrvInputRef = useRef(null);
 
     const createVehicleMakeHandler = (() => {
 
-        const enteredName = (nameInputRef.current as HTMLInputElement).value;
-        const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
+        const enteredName = nameInputRef.current.value;
+        const enteredAbrv = abrvInputRef.current.value;
 
-        VehicleMakeStore.createVehicleMakeAsync({
+        props.store.createVehicleMakeAsync({
             id: null,
             name: enteredName,
             abrv: enteredAbrv

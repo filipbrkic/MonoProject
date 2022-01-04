@@ -1,6 +1,4 @@
-import { VehicleMakeDto } from "../common/VehicleMakeDto";
-
-export const post = async (model: VehicleMakeDto) => {
+export const post = async (model) => {
     try {
         const response = await fetch("http://localhost:51044/VehicleMake/PostVehicleMake", {
             method: "POST",
@@ -22,10 +20,11 @@ export const getAll = async () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
         })
         return await response.json();
     } catch (error) {
         console.log(error)
     }
 }
+
