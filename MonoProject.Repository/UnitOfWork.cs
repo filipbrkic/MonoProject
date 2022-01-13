@@ -38,18 +38,25 @@ namespace MonoProject.Repository
             this.vehicleModelToVehicleOwnerLinkRepository = vehicleModelToVehicleOwnerLinkRepository;
         }
 
-        public async Task<int> AddVehicleOwnerAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link)
+        public async Task<int> AddVehicleModelOwnerAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link)
         {
             var addOwner =  await vehicleOwnerRepository.AddAsync(vehicleOwnerDTO);
 
             var vehicleRegistrationDTO = new VehicleRegistrationDTO() { Id = Guid.NewGuid(), RegistrationNumber = link.RegistrationNumber };
             var addRegistration = await vehicleRegistrationRepository.AddAsync(vehicleRegistrationDTO);
 
+            var vehicleModelDTO = new VehicleModelDTO() { Id = Guid.NewGuid(), Name = link.Name, Abrv = link.Abrv, MakeId = link.MakeId, EngineTypeId = link.EngineTypeId };
+            var addModel = await vehicleModelRepository.AddAsync(vehicleModelDTO);
+
+            link.OwnerId = vehicleOwnerDTO.Id;
+            link.ModelId = vehicleModelDTO.Id;
             link.RegistrationId = vehicleRegistrationDTO.Id;
+            link.MakeId = vehicleModelDTO.MakeId;
+            link.EngineTypeId = vehicleModelDTO.EngineTypeId;
 
             var addLink = await vehicleModelToVehicleOwnerLinkRepository.AddAsync(link);
 
-            var results = addOwner & addRegistration & addLink;
+            var results = addOwner & addRegistration & addLink & addModel;
             return results;
         }
 

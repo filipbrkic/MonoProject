@@ -6,7 +6,7 @@ namespace MonoProject.Repository.Common
 {
     public interface IUnitOfWork : IDisposable
     {
-        Task<int> AddVehicleOwnerAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link);
+        Task<int> AddVehicleModelOwnerAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link);
         Task<int> DeleteVehicleModelAsync(Guid id);
         Task<int> DeleteVehicleOwnerAsync(Guid id);
     }
