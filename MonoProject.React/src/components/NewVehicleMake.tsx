@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { inject, observer } from "mobx-react";
 
 const NewVehicleMake = ({ rootStore }: any) => {

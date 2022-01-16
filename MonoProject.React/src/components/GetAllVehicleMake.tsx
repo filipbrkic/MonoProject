@@ -2,7 +2,7 @@ import { inject, observer } from "mobx-react";
 import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
 import { autorun } from "mobx";
 
-const GetAllVehicleMakeList = ({ rootStore }: any) => {
+const GetAllVehicleMakeList: React.FC = ({ rootStore }: any) => {
     useEffect(() => autorun(() => {
         rootStore.vehicleMakeStore?.getAllVehicleMakeAsync();
     }), [])
