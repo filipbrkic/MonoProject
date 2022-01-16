@@ -1,11 +1,13 @@
-import { autorun } from "mobx";
 import { inject, observer } from "mobx-react";
-import { useEffect } from "react";
+import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
+import { autorun } from "mobx";
 
-const GetAllVehicleMakeList = ({ rootStore }) => {
+const GetAllVehicleMakeList = ({ rootStore }: any) => {
     useEffect(() => autorun(() => {
-        rootStore.vehicleMakeStore.getAllVehicleMakeAsync();
-    }))
+        rootStore.vehicleMakeStore?.getAllVehicleMakeAsync();
+    }), [])
+
+
 
     return (
         <div>
@@ -21,12 +23,12 @@ const GetAllVehicleMakeList = ({ rootStore }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rootStore.vehicleMakeStore.model.map(make => (
+                    {rootStore.vehicleMakeStore.data.map((make: { id: Key | null | undefined; name: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; abrv: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
                         <tr key={make.id}>
                             <td>{make.name}</td>
                             <td>{make.abrv}</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

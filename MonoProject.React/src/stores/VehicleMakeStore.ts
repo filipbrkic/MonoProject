@@ -1,18 +1,23 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import { VehicleMakeDto } from "../common/VehicleMakeDto";
 import { post, getAll } from "./VehicleMakeService";
 
 export default class VehicleMakeStore {
     constructor() {
         makeAutoObservable(this);
     }
-    model = [];
+
+    data = [];
+    pagination = null;
+    sorting = null;
+    filtering = null;
 
     status = "initial";
 
-    createVehicleMakeAsync = async (model) => {
+    createVehicleMakeAsync = async (model: VehicleMakeDto) => {
         try {
             const response = await post(model);
-            if (response.status === 200) {
+            if (response?.status === 200) {
                 runInAction(() => {
                     this.status = "success";
                 })
@@ -27,9 +32,9 @@ export default class VehicleMakeStore {
 
     getAllVehicleMakeAsync = async () => {
         try {
-            const data = await getAll();
+            const makeData = await getAll();
             runInAction(() => {
-                this.vehicleMakeData = data;
+                this.data = makeData.data;
             })
         } catch (error) {
             runInAction(() => {

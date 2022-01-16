@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { Provider } from 'mobx-react';
 import { rootStore } from './stores/RootStore';
-import { Provider } from "mobx-react";
 
 
 ReactDOM.render(

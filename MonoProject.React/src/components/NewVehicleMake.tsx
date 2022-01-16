@@ -1,17 +1,16 @@
 import React, { useRef } from "react";
 import { inject, observer } from "mobx-react";
 
-const NewVehicleMake = ({ rootStore }) => {
-    const nameInputRef = useRef(null);
-    const abrvInputRef = useRef(null);
+const NewVehicleMake = ({ rootStore }: any) => {
+    const nameInputRef = useRef<HTMLInputElement>(null);
+    const abrvInputRef = useRef<HTMLInputElement>(null);
 
     const createVehicleMakeHandler = (() => {
 
-        const enteredName = nameInputRef.current.value;
-        const enteredAbrv = abrvInputRef.current.value;
+        const enteredName = (nameInputRef.current as HTMLInputElement).value;
+        const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
 
         rootStore.vehicleMakeStore.createVehicleMakeAsync({
-            id: null,
             name: enteredName,
             abrv: enteredAbrv,
         })

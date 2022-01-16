@@ -3,7 +3,7 @@ import VehicleMakeStore from "./VehicleMakeStore";
 export default class RootStore {
     vehicleMakeStore;
     constructor() {
-        this.vehicleMakeStore = new VehicleMakeStore(this);
+        this.vehicleMakeStore = new VehicleMakeStore();
     }
 }
 
