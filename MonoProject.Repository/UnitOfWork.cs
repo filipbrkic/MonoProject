@@ -4,6 +4,7 @@ using MonoProject.DAL.Data;
 using MonoProject.DAL.Models;
 using MonoProject.Repository.Common;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace MonoProject.Repository
             this.vehicleModelToVehicleOwnerLinkRepository = vehicleModelToVehicleOwnerLinkRepository;
         }
 
-        public async Task<int> AddVehicleModelOwnerAsync(VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link)
+        public async Task<int> AddVehicleModelOwnerAsync (VehicleOwnerDTO vehicleOwnerDTO, VehicleModelToVehicleOwnerLinkDTO link)
         {
             var addOwner =  await vehicleOwnerRepository.AddAsync(vehicleOwnerDTO);
 
@@ -62,7 +63,8 @@ namespace MonoProject.Repository
 
         public async Task<int> DeleteVehicleOwnerAsync (Guid id)
         {
-            Expression<Func<VehicleModelToVehicleOwnerLink, bool>> ownerMatch = m => m.Equals(id);
+            Expression<Func<VehicleModelToVehicleOwnerLink, bool>> ownerMatch = m => m.OwnerId.Equals(id);
+
             var vehicleModelToVehicleOwnerLink = await vehicleModelToVehicleOwnerLinkRepository.GetAllAsync(ownerMatch);
 
             var registrationIds = vehicleModelToVehicleOwnerLink.Select(m => m.RegistrationId);

@@ -17,9 +17,9 @@ namespace MonoProject.Service
             this.vehiceEngineTypeRepository = vehiceEngineTypeRepository;
         }
 
-        public async Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
+        public async Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync()
         {
-            return await vehiceEngineTypeRepository.GetAllAsync(filtering, paging, sorting);
+            return await vehiceEngineTypeRepository.GetAllAsync();
         }
 
         public async Task<VehicleEngineTypeDTO> GetAsync(Guid id)

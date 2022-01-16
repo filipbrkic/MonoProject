@@ -38,7 +38,7 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
-            var response = new PagedResult<VehicleMakeDTO>()
+            var response = new PagedResult<VehicleMakeDTO, object>()
             {
                 Data = await vehicleMakeService.GetAllAsync(filtering, paging, sorting),
                 Filtering = filtering,
@@ -52,20 +52,27 @@ namespace MonoProject.API.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult> PostVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-            var result = await vehicleMakeService.AddAsync(vehicleMakeDTO);
-
-            if (result == 0)
+            try
             {
-                return BadRequest();
-            }
+                var result = await vehicleMakeService.AddAsync(vehicleMakeDTO);
 
-            return Ok();
+                if (result == 0)
+                {
+                    return BadRequest();
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-            var vehicleGet = await vehicleMakeService.GetAsync(vehicleMakeDTO.Id);
+            var vehicleGet = await vehicleMakeService.GetAsync(vehicleMakeDTO.Id.Value);
 
             if (vehicleGet == null)
             {

@@ -8,7 +8,7 @@ namespace MonoProject.Repository.Common
 {
     public interface IVehicleEngineTypeRepository
     {
-        Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting);
+        Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync();
         Task<VehicleEngineTypeDTO> GetAsync(Guid id);
         Task<int> AddAsync(VehicleEngineTypeDTO entity);
         Task<int> DeleteAsync(Guid id);

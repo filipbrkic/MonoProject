@@ -41,7 +41,7 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
-            var response = new PagedResult<VehicleOwnerDTO>()
+            var response = new PagedResult<VehicleOwnerDTO, object>()
             {
                 Data = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting),
                 Filtering = filtering,

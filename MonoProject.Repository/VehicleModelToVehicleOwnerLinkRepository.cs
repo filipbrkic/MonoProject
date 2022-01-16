@@ -25,6 +25,7 @@ namespace MonoProject.Repository
 
         public async Task<IEnumerable<VehicleModelToVehicleOwnerLinkDTO>> GetAllAsync(Expression<Func<VehicleModelToVehicleOwnerLink, bool>> ownerMatch)
         {
+            var test = await genericRepository.GetAllAsync<VehicleModelToVehicleOwnerLink>(ownerMatch);
             return mapper.Map<IEnumerable<VehicleModelToVehicleOwnerLinkDTO>>(await genericRepository.GetAllAsync<VehicleModelToVehicleOwnerLink>(ownerMatch));
         }
 
@@ -50,7 +51,7 @@ namespace MonoProject.Repository
 
         public async Task<int> DeleteRangeAsync(IEnumerable<VehicleModelToVehicleOwnerLinkDTO> entity)
         {
-            return await genericRepository.DeleteRangeAsync<VehicleModelToVehicleOwnerLinkDTO>(entity);
+            return await genericRepository.DeleteRangeAsync<VehicleModelToVehicleOwnerLink>(mapper.Map<IEnumerable<VehicleModelToVehicleOwnerLink>>(entity));
         }
     }
 }

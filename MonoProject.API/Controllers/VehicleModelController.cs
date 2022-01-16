@@ -12,10 +12,12 @@ namespace MonoProject.API.Controllers
     public class VehicleModelController : ControllerBase
     {
         private readonly IVehicleModelService vehicleModelService;
+        private readonly IVehicleEngineTypeService vehicleEngineTypeService;
 
-        public VehicleModelController(IVehicleModelService vehicleModelService)
+        public VehicleModelController(IVehicleModelService vehicleModelService, IVehicleEngineTypeService vehicleEngineTypeService)
         {
             this.vehicleModelService = vehicleModelService;
+            this.vehicleEngineTypeService = vehicleEngineTypeService;
         }
 
         [HttpGet("[action]")]
@@ -38,12 +40,14 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
-            var response = new PagedResult<VehicleModelDTO>()
+
+            var response = new PagedResult<VehicleModelDTO, VehicleEngineTypeDTO>()
             {
                 Data = await vehicleModelService.GetAllAsync(filtering, paging, sorting),
                 Filtering = filtering,
                 Pagination = paging,
                 Sorting = sorting,
+                MetaData = await vehicleEngineTypeService.GetAllAsync(),
             };
 
             return Ok(response);
