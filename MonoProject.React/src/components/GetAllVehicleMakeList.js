@@ -2,9 +2,9 @@ import { autorun } from "mobx";
 import { inject, observer } from "mobx-react";
 import { useEffect } from "react";
 
-const GetAllVehicleMakeList = (props) => {
+const GetAllVehicleMakeList = ({ rootStore }) => {
     useEffect(() => autorun(() => {
-        props.store.getAllVehicleMakeAsync();
+        rootStore.vehicleMakeStore.getAllVehicleMakeAsync();
     }))
 
     return (
@@ -21,7 +21,7 @@ const GetAllVehicleMakeList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.store.model.map(make => (
+                    {rootStore.vehicleMakeStore.model.map(make => (
                         <tr key={make.id}>
                             <td>{make.name}</td>
                             <td>{make.abrv}</td>
@@ -33,4 +33,4 @@ const GetAllVehicleMakeList = (props) => {
     )
 };
 
-export default inject("store")(observer(GetAllVehicleMakeList))
+export default inject("rootStore")(observer(GetAllVehicleMakeList))

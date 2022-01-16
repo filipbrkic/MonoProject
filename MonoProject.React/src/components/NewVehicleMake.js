@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
-import { inject, observer, PropTypes } from "mobx-react";
-import VehicleMakeStore from "../stores/VehicleMakeStore";
+import { inject, observer } from "mobx-react";
 
-const NewVehicleMake = (props) => {
+const NewVehicleMake = ({ rootStore }) => {
     const nameInputRef = useRef(null);
     const abrvInputRef = useRef(null);
 
@@ -11,10 +10,10 @@ const NewVehicleMake = (props) => {
         const enteredName = nameInputRef.current.value;
         const enteredAbrv = abrvInputRef.current.value;
 
-        props.store.createVehicleMakeAsync({
+        rootStore.vehicleMakeStore.createVehicleMakeAsync({
             id: null,
             name: enteredName,
-            abrv: enteredAbrv
+            abrv: enteredAbrv,
         })
     });
 
@@ -31,4 +30,4 @@ const NewVehicleMake = (props) => {
     );
 }
 
-export default inject("store")(observer(NewVehicleMake));
+export default inject("rootStore")(observer(NewVehicleMake));

@@ -12,4 +12,4 @@ function App() {
   );
 }
 
-export default inject("store")(observer(App));
+export default inject("rootStore")(observer(App));

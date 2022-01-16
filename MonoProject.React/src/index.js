@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import VehicleMakeStore from './stores/VehicleMakeStore';
+import { rootStore } from './stores/RootStore';
 import { Provider } from "mobx-react";
 
 
 ReactDOM.render(
-  <Provider store={VehicleMakeStore}>
+  <Provider rootStore={rootStore}>
     <App />
   </Provider>,
   document.getElementById('root')

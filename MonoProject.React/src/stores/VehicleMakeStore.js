@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { post, getAll } from "./VehicleMakeService";
 
-class VehicleMakeStore {
+export default class VehicleMakeStore {
     constructor() {
         makeAutoObservable(this);
     }
@@ -38,5 +38,3 @@ class VehicleMakeStore {
         }
     };
 }
-
-export default new VehicleMakeStore();
