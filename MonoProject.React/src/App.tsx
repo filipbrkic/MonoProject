@@ -1,6 +1,7 @@
 import NewVehicleMake from './components/NewVehicleMake';
 import { inject, observer } from 'mobx-react';
-import GetAllVehicleMakeList from './components/GetAllVehicleMake';
+import GetAllVehicleMake from './components/GetAllVehicleMake';
+import GetAllVehicleOwner from "./components/GetAllVehicleOwner";
 import { rootStore } from './stores/RootStore';
 
 
@@ -9,7 +10,8 @@ function App() {
   return (
     <div>
       <NewVehicleMake rootStore={rootStore} />
-      <GetAllVehicleMakeList />
+      <GetAllVehicleMake />
+      <GetAllVehicleOwner />
     </div>
   );
 }

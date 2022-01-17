@@ -72,14 +72,12 @@ namespace MonoProject.API.Controllers
         [HttpPut("[action]")]
         public async Task<IActionResult> UpdateVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-            var vehicleGet = await vehicleMakeService.GetAsync(vehicleMakeDTO.Id.Value);
+            var result = await vehicleMakeService.UpdateAsync(vehicleMakeDTO);
 
-            if (vehicleGet == null)
+            if (result == 0)
             {
                 return BadRequest();
             }
-
-            await vehicleMakeService.UpdateAsync(vehicleMakeDTO);
 
             return Ok();
         }

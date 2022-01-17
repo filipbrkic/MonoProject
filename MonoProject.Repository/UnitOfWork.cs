@@ -49,7 +49,7 @@ namespace MonoProject.Repository
             var vehicleModelDTO = new VehicleModelDTO() { Id = Guid.NewGuid(), Name = link.Name, Abrv = link.Abrv, MakeId = link.MakeId, EngineTypeId = link.EngineTypeId };
             var addModel = await vehicleModelRepository.AddAsync(vehicleModelDTO);
 
-            link.OwnerId = vehicleOwnerDTO.Id;
+            link.OwnerId = vehicleOwnerDTO.Id.Value;
             link.ModelId = vehicleModelDTO.Id;
             link.RegistrationId = vehicleRegistrationDTO.Id;
             link.MakeId = vehicleModelDTO.MakeId;
