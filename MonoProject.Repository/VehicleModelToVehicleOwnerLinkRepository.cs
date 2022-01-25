@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
 using MonoProject.DAL.Models;
@@ -16,7 +17,7 @@ namespace MonoProject.Repository
         private readonly IGenericRepository genericRepository;
         private readonly VehicleDbContext context;
 
-        public VehicleModelToVehicleOwnerLinkRepository(VehicleDbContext context, IMapper mapper, IGenericRepository genericRepository)
+        public VehicleModelToVehicleOwnerLinkRepository(IMapper mapper, IGenericRepository genericRepository, VehicleDbContext context)
         {
             this.context = context;
             this.mapper = mapper;
@@ -34,24 +35,19 @@ namespace MonoProject.Repository
             return mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(await genericRepository.GetAsync<VehicleModelToVehicleOwnerLink>(id));
         }
 
-        public async Task<int> AddAsync(VehicleModelToVehicleOwnerLinkDTO entity)
+        public EntityEntry<VehicleModelToVehicleOwnerLink> Add(VehicleModelToVehicleOwnerLinkDTO entity)
         {
-            return await genericRepository.AddAsync(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
+            return genericRepository.Add(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<EntityEntry<VehicleModelToVehicleOwnerLink>> DeleteAsync(Guid id)
         {
             return await genericRepository.DeleteAsync<VehicleModelToVehicleOwnerLink>(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleModelToVehicleOwnerLinkDTO entity)
+        public EntityEntry<VehicleModelToVehicleOwnerLink> Delete(VehicleModelToVehicleOwnerLinkDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
-        }
-
-        public async Task<int> DeleteRangeAsync(IEnumerable<VehicleModelToVehicleOwnerLinkDTO> entity)
-        {
-            return await genericRepository.DeleteRangeAsync<VehicleModelToVehicleOwnerLink>(mapper.Map<IEnumerable<VehicleModelToVehicleOwnerLink>>(entity));
+            return genericRepository.Delete(mapper.Map<VehicleModelToVehicleOwnerLink>(entity));
         }
     }
 }

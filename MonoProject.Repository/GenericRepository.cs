@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.DAL.Data;
 using MonoProject.Repository.Common;
 using System;
@@ -34,35 +35,20 @@ namespace MonoProject.Repository
             return (vehicle, vehicleCount);
         }
 
-        public async Task<int> AddAsync<T>(T entity) where T : class
+        public EntityEntry<T> Add<T>(T entity) where T : class
         {
-            vehicleDbContext.Set<T>().Add(entity);
-            return await vehicleDbContext.SaveChangesAsync();
+            return vehicleDbContext.Set<T>().Add(entity);
         }
 
-        public async Task<int> DeleteAsync<T>(Guid id) where T : class
+        public async Task<EntityEntry<T>> DeleteAsync<T>(Guid id) where T : class
         {
             var entity = await GetAsync<T>(id);
-            vehicleDbContext.Set<T>().Remove(entity);
-            return await vehicleDbContext.SaveChangesAsync();
+            return vehicleDbContext.Set<T>().Remove(entity);
         }
 
-        public async Task<int> DeleteAsync<T>(T entity) where T : class
+        public EntityEntry<T> Delete<T>(T entity) where T : class
         {
-            vehicleDbContext.Set<T>().Remove(entity);
-            return await vehicleDbContext.SaveChangesAsync();
-        }
-        public async Task<int> DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class
-        {
-            vehicleDbContext.Set<T>().RemoveRange(entities);
-            return await vehicleDbContext.SaveChangesAsync();
-        }
-
-        public async Task<int> BulkDeleteAsync<T>(Expression<Func<T, bool>> match) where T : class
-        {
-            var registrations = await vehicleDbContext.Set<T>().Where(match).ToListAsync();
-            vehicleDbContext.RemoveRange(registrations);
-            return await vehicleDbContext.SaveChangesAsync();
+            return vehicleDbContext.Set<T>().Remove(entity);
         }
 
         public async Task<T> GetAsync<T>(Guid id) where T : class
@@ -75,10 +61,9 @@ namespace MonoProject.Repository
             return await vehicleDbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<int> UpdateAsync<T>(T entity) where T : class
+        public EntityEntry<T> Update<T>(T entity) where T : class
         {
-            vehicleDbContext.Set<T>().Update(entity);
-            return await vehicleDbContext.SaveChangesAsync();
+            return vehicleDbContext.Set<T>().Update(entity);
         }
     }
 }

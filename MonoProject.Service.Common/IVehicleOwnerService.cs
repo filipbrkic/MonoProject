@@ -1,5 +1,7 @@
-﻿using MonoProject.Common.Interface;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +11,10 @@ namespace MonoProject.Service.Common
     public interface IVehicleOwnerService
     {
         Task<IEnumerable<VehicleOwnerDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting);
-        Task<int> AddAsync(VehicleOwnerDTO entity, VehicleModelToVehicleOwnerLinkDTO link);
+        EntityEntry<VehicleOwner> Add(VehicleOwnerDTO entity);
         Task<VehicleOwnerDTO> GetAsync(Guid id);
-        Task<int> UpdateAsync(VehicleOwnerDTO entity);
-        Task<int> DeleteAsync(Guid id);
-        Task<int> DeleteAsync(VehicleOwnerDTO entity);
+        EntityEntry<VehicleOwner> Update(VehicleOwnerDTO entity);
+        Task<EntityEntry<VehicleOwner>> DeleteAsync(Guid id);
+        EntityEntry<VehicleOwner> Delete(VehicleOwnerDTO entity);
     }
 }

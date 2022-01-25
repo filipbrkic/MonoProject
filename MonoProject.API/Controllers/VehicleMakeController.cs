@@ -50,13 +50,13 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult> PostVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
+        public ActionResult PostVehicleMake([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
             try
             {
-                var result = await vehicleMakeService.AddAsync(vehicleMakeDTO);
+                var result = vehicleMakeService.Add(vehicleMakeDTO);
 
-                if (result == 0)
+                if (result == null)
                 {
                     return BadRequest();
                 }
@@ -70,11 +70,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> UpdateVehicleMakeAsync([FromBody] VehicleMakeDTO vehicleMakeDTO)
+        public IActionResult UpdateVehicleMake([FromBody] VehicleMakeDTO vehicleMakeDTO)
         {
-            var result = await vehicleMakeService.UpdateAsync(vehicleMakeDTO);
+            var result = vehicleMakeService.Update(vehicleMakeDTO);
 
-            if (result == 0)
+            if (result == null)
             {
                 return BadRequest();
             }

@@ -1,4 +1,5 @@
-﻿using MonoProject.Common.Models;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MonoProject.Common.Models;
 using MonoProject.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,8 @@ namespace MonoProject.Repository.Common
     {
         Task<IEnumerable<VehicleModelToVehicleOwnerLinkDTO>> GetAllAsync(Expression<Func<VehicleModelToVehicleOwnerLink, bool>> ownerMatch);
         Task<VehicleModelToVehicleOwnerLinkDTO> GetAsync(Guid id);
-        Task<int> AddAsync(VehicleModelToVehicleOwnerLinkDTO entity);
-        Task<int> DeleteAsync(Guid id);
-        Task<int> DeleteAsync(VehicleModelToVehicleOwnerLinkDTO entity);
-        Task<int> DeleteRangeAsync(IEnumerable<VehicleModelToVehicleOwnerLinkDTO> entity);
+        EntityEntry<VehicleModelToVehicleOwnerLink> Add(VehicleModelToVehicleOwnerLinkDTO entity);
+        Task<EntityEntry<VehicleModelToVehicleOwnerLink>> DeleteAsync(Guid id);
+        EntityEntry<VehicleModelToVehicleOwnerLink> Delete(VehicleModelToVehicleOwnerLinkDTO entity);
     }
 }

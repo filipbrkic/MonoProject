@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
@@ -17,7 +18,7 @@ namespace MonoProject.Repository
         private readonly IGenericRepository genericRepository;
         private readonly VehicleDbContext context;
 
-        public VehicleRegistrationRepository(VehicleDbContext context, IMapper mapper, IGenericRepository genericRepository)
+        public VehicleRegistrationRepository(IMapper mapper, IGenericRepository genericRepository, VehicleDbContext context)
         {
             this.mapper = mapper;
             this.genericRepository = genericRepository;
@@ -52,24 +53,20 @@ namespace MonoProject.Repository
             }
         }
 
-        public async Task<int> AddAsync(VehicleRegistrationDTO entity)
+        public EntityEntry<VehicleRegistration> Add(VehicleRegistrationDTO entity)
         {
-            return await genericRepository.AddAsync(mapper.Map<VehicleRegistration>(entity));
+            entity.Id = Guid.NewGuid();
+            return genericRepository.Add(mapper.Map<VehicleRegistration>(entity));
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<EntityEntry<VehicleRegistration>> DeleteAsync(Guid id)
         {
             return await genericRepository.DeleteAsync<VehicleRegistration>(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleRegistrationDTO entity)
+        public EntityEntry<VehicleRegistration> Delete(VehicleRegistrationDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleRegistration>(entity));
-        }
-        
-        public async Task<int> BulkDeleteAsync(Expression<Func<VehicleRegistration, bool>> match)
-        {
-            return await genericRepository.BulkDeleteAsync<VehicleRegistration>(match);
+            return genericRepository.Delete(mapper.Map<VehicleRegistration>(entity));
         }
 
         public async Task<VehicleRegistrationDTO> GetAsync(Guid id)
@@ -77,10 +74,10 @@ namespace MonoProject.Repository
             return mapper.Map<VehicleRegistrationDTO>(await genericRepository.GetAsync<VehicleRegistration>(id));
         }
 
-        public async Task<int> UpdateAsync(VehicleRegistrationDTO entity)
+        public EntityEntry<VehicleRegistration> Update(VehicleRegistrationDTO entity)
         {
             context.ChangeTracker.Clear();
-            return await genericRepository.UpdateAsync(mapper.Map<VehicleRegistration>(entity));
+            return genericRepository.Update(mapper.Map<VehicleRegistration>(entity));
         }
     }
 }

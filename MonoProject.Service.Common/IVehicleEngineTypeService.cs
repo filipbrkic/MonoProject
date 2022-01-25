@@ -1,4 +1,6 @@
-﻿using MonoProject.Common.Models;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MonoProject.Common.Models;
+using MonoProject.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +11,6 @@ namespace MonoProject.Service.Common
     {
         Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync();
         Task<VehicleEngineTypeDTO> GetAsync(Guid id);
-        Task<int> AddAsync(VehicleEngineTypeDTO entity);
+        EntityEntry<VehicleEngineType> Add(VehicleEngineTypeDTO entity);
     }
 }

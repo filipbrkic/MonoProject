@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MonoProject.DAL.Data;
 using MonoProject.Repository.Common;
 
 namespace MonoProject.Repository
@@ -14,7 +13,6 @@ namespace MonoProject.Repository
             services.AddTransient<IVehicleRegistrationRepository, VehicleRegistrationRepository>();
             services.AddTransient<IVehicleEngineTypeRepository, VehicleEngineTypeRepository>();
             services.AddTransient<IGenericRepository, GenericRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IVehicleModelToVehicleOwnerLinkRepository, VehicleModelToVehicleOwnerLinkRepository>();
         }
     }

@@ -1,0 +1,39 @@
+.submit {
+    background-color: #a7a1a1d2;
+    border-radius: 10px;
+    padding: 40px;
+    width:max-content;
+    margin:auto;
+}
+
+.submit h1{
+    color: black;
+    font-size: 30px;
+}
+
+.submit input{
+    margin: 15px;
+}
+
+.submit button{
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #40005d;
+    border: 1px solid white;
+    padding: 0.5rem;
+    border-radius: 100px;
+    font-size: 1.25rem;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s;
+  }
+  
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }

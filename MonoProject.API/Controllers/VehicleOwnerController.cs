@@ -53,13 +53,11 @@ namespace MonoProject.API.Controllers
         }   
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<VehicleOwnerDTO>> PostVehicleModelOwnerAsync([FromQuery] VehicleOwnerDTO vehicleOwnerDTO)
+        public ActionResult<VehicleOwnerDTO> PostVehicleOwner([FromQuery] VehicleOwnerDTO vehicleOwnerDTO)
         {
-            vehicleOwnerDTO.Id = Guid.NewGuid();
-            var vehicleLink = mapper.Map<VehicleModelToVehicleOwnerLinkDTO>(vehicleOwnerDTO);
-            var result = await vehicleOwnerService.AddAsync(vehicleOwnerDTO, vehicleLink);
+            var result = vehicleOwnerService.Add(vehicleOwnerDTO);
 
-            if (result == 0)
+            if (result == null)
             {
                 return BadRequest();
             }
@@ -68,11 +66,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> UpdateVehicleOwnerAsync([FromBody] VehicleOwnerDTO vehicleOwnerDTO)
+        public IActionResult UpdateVehicleOwner([FromBody] VehicleOwnerDTO vehicleOwnerDTO)
         {
-            var result = await vehicleOwnerService.UpdateAsync(vehicleOwnerDTO);
+            var result = vehicleOwnerService.Update(vehicleOwnerDTO);
 
-            if (result == 0)
+            if (result == null)
             {
                 return BadRequest();
             }

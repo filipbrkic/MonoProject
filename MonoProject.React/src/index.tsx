@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import { Provider } from 'mobx-react';
 import { rootStore } from './stores/RootStore';
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.render(
   <Provider rootStore={rootStore}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

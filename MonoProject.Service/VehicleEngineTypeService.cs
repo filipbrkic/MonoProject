@@ -1,6 +1,6 @@
-﻿using MonoProject.Common.Interface;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Models;
-using MonoProject.Repository.Common;
+using MonoProject.DAL.Models;
 using MonoProject.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -10,26 +10,26 @@ namespace MonoProject.Service
 {
     public class VehicleEngineTypeService : IVehicleEngineTypeService
     {
-        private readonly IVehicleEngineTypeRepository vehiceEngineTypeRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public VehicleEngineTypeService(IVehicleEngineTypeRepository vehiceEngineTypeRepository)
+        public VehicleEngineTypeService(IUnitOfWork unitOfWork)
         {
-            this.vehiceEngineTypeRepository = vehiceEngineTypeRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<VehicleEngineTypeDTO>> GetAllAsync()
         {
-            return await vehiceEngineTypeRepository.GetAllAsync();
+            return await unitOfWork.VehicleEngineTypeRepository.GetAllAsync();
         }
 
         public async Task<VehicleEngineTypeDTO> GetAsync(Guid id)
         {
-            return await vehiceEngineTypeRepository.GetAsync(id);
+            return await unitOfWork.VehicleEngineTypeRepository.GetAsync(id);
         }
 
-        public async Task<int> AddAsync(VehicleEngineTypeDTO entity)
+        public EntityEntry<VehicleEngineType> Add(VehicleEngineTypeDTO entity)
         {
-            return await vehiceEngineTypeRepository.AddAsync(entity);
+            return unitOfWork.VehicleEngineTypeRepository.Add(entity);
         }
     }
 }

@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { inject, observer } from "mobx-react";
 
+import classes from "./NewVehicleMake.module.css"
+
 const NewVehicleMake = ({ rootStore }: any) => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
@@ -17,15 +19,18 @@ const NewVehicleMake = ({ rootStore }: any) => {
     });
 
     return (
-        <form onSubmit={() => createVehicleMakeHandler()}>
-            <div>
-                <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
-            </div>
-            <div>
-                <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
-            </div>
-            <button type="submit" >Save</button>
-        </form>
+        <div className={classes.submit}>
+            <h1>Add Vehicle Brand</h1>
+            <form onSubmit={() => createVehicleMakeHandler()} >
+                <div>
+                    <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
+                </div>
+                <div>
+                    <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
+                </div>
+                <button type="submit" >Save</button>
+            </form>
+        </div>
     );
 }
 

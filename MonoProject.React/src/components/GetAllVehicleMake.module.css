@@ -1,0 +1,26 @@
+.table {
+    background-color:rgb(255, 191, 154);
+    border-radius: 10px;
+    padding: 40px;
+    width:max-content;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.table h1{
+    font-size: 30px;
+}
+
+.table table{
+    width: 100%;
+    text-align: center;
+}
+
+.table th{
+    height: 20px;
+    font-size: 20px;
+}
+
+.table table, th, td{
+    border: 1px solid black;
+}

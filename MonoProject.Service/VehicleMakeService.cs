@@ -1,6 +1,7 @@
-﻿using MonoProject.Common.Interface;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
-using MonoProject.Repository.Common;
+using MonoProject.DAL.Models;
 using MonoProject.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -10,40 +11,49 @@ namespace MonoProject.Service
 {
     public class VehicleMakeService : IVehicleMakeService
     {
-        private readonly IVehicleMakeRepository vehicleMakeRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository)
+        public VehicleMakeService(IUnitOfWork unitOfWork)
         {
-            this.vehicleMakeRepository = vehicleMakeRepository;
+            this.unitOfWork = unitOfWork;
         }
         public async Task<IEnumerable<VehicleMakeDTO>> GetAllAsync(IFiltering filtering, IPaging paging, ISorting sorting)
         {
-            return await vehicleMakeRepository.GetAllAsync(filtering, paging, sorting);
+            return await unitOfWork.VehicleMakeRepository.GetAllAsync(filtering, paging, sorting);
         }
 
-        public async Task<int> AddAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Add(VehicleMakeDTO entity)
         {
-            return await vehicleMakeRepository.AddAsync(entity);
+            var result = unitOfWork.VehicleMakeRepository.Add(entity);
+            unitOfWork.SaveChanges();
+            return result;
+
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<EntityEntry<VehicleMake>> DeleteAsync(Guid id)
         {
-            return await vehicleMakeRepository.DeleteAsync(id);
+            var result = await unitOfWork.VehicleMakeRepository.DeleteAsync(id);
+            unitOfWork.SaveChanges();
+            return result;
         }
 
-        public async Task<int> DeleteAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Delete(VehicleMakeDTO entity)
         {
-            return await vehicleMakeRepository.DeleteAsync(entity);
+            var result = unitOfWork.VehicleMakeRepository.Delete(entity);
+            unitOfWork.SaveChanges();
+            return result;
         }
 
         public async Task<VehicleMakeDTO> GetAsync(Guid id)
         {
-            return await vehicleMakeRepository.GetAsync(id);
+            return await unitOfWork.VehicleMakeRepository.GetAsync(id);
         }
 
-        public async Task<int> UpdateAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Update(VehicleMakeDTO entity)
         {
-            return await vehicleMakeRepository.UpdateAsync(entity);
+            var result = unitOfWork.VehicleMakeRepository.Update(entity);
+            unitOfWork.SaveChanges();
+            return result;
         }
     }
 }

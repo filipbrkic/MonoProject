@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
 using MonoProject.DAL.Models;
@@ -32,18 +33,20 @@ namespace MonoProject.Repository
             return mapper.Map<VehicleEngineTypeDTO>(await genericRepository.GetAsync<VehicleEngineType>(id));
         }
 
-        public async Task<int> AddAsync(VehicleEngineTypeDTO entity)
+        public EntityEntry<VehicleEngineType> Add(VehicleEngineTypeDTO entity)
         {
-            return await genericRepository.AddAsync(mapper.Map<VehicleEngineType>(entity));
+            entity.Id = Guid.NewGuid();
+            return genericRepository.Add(mapper.Map<VehicleEngineType>(entity));
         }
-        public async Task<int> DeleteAsync(Guid id)
+
+        public async Task<EntityEntry<VehicleEngineType>> DeleteAsync(Guid id)
         {
             return await genericRepository.DeleteAsync<VehicleEngineType>(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleEngineTypeDTO entity)
+        public EntityEntry<VehicleEngineType> DeleteAsync(VehicleEngineTypeDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleEngineType>(entity));
+            return genericRepository.Delete(mapper.Map<VehicleEngineType>(entity));
         }
     }
 }

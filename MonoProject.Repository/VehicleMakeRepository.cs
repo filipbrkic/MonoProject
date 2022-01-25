@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
@@ -51,32 +52,31 @@ namespace MonoProject.Repository
             }
         }
 
-        public async Task<int> AddAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Add(VehicleMakeDTO entity)
         {
             entity.Id = Guid.NewGuid();
-            return await genericRepository.AddAsync(mapper.Map<VehicleMake>(entity));
+            return genericRepository.Add(mapper.Map<VehicleMake>(entity));
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<EntityEntry<VehicleMake>> DeleteAsync(Guid id)
         {
             return await genericRepository.DeleteAsync<VehicleMake>(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Delete(VehicleMakeDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleMake>(entity));
+            return genericRepository.Delete(mapper.Map<VehicleMake>(entity));
         }
-
 
         public async Task<VehicleMakeDTO> GetAsync(Guid id)
         {
             return mapper.Map<VehicleMakeDTO>(await genericRepository.GetAsync<VehicleMake>(id));
         }
 
-        public async Task<int> UpdateAsync(VehicleMakeDTO entity)
+        public EntityEntry<VehicleMake> Update(VehicleMakeDTO entity)
         {
             context.ChangeTracker.Clear();
-            return await genericRepository.UpdateAsync(mapper.Map<VehicleMake>(entity));
+            return genericRepository.Update(mapper.Map<VehicleMake>(entity));
         }
     }
 }

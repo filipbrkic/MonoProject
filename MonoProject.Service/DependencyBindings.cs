@@ -12,6 +12,7 @@ namespace MonoProject.Service
             services.AddTransient<IVehicleOwnerService, VehicleOwnerService>();
             services.AddTransient<IVehicleRegistrationService, VehicleRegistrationService>();
             services.AddTransient<IVehicleEngineTypeService, VehicleEngineTypeService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }

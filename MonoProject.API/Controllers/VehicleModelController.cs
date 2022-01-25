@@ -54,13 +54,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<VehicleModelDTO>> PostVehicleModelAsync([FromBody] VehicleModelDTO vehicleModelDTO)
+        public ActionResult<VehicleModelDTO> PostVehicleModel([FromBody] VehicleModelDTO vehicleModelDTO)
         {
-            vehicleModelDTO.Id = Guid.NewGuid();
+            var result = vehicleModelService.Add(vehicleModelDTO);
 
-            var result = await vehicleModelService.AddAsync(vehicleModelDTO);
-
-            if (result == 0)
+            if (result == null)
             {
                 return BadRequest();
             }
@@ -69,11 +67,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> UpdateVehicleModelAsync([FromBody] VehicleModelDTO vehicleModelDTO)
+        public IActionResult UpdateVehicleModel([FromBody] VehicleModelDTO vehicleModelDTO)
         {
-            var result = await vehicleModelService.UpdateAsync(vehicleModelDTO);
+            var result = vehicleModelService.Update(vehicleModelDTO);
 
-            if (result == 0)
+            if (result == null)
             {
                 return BadRequest();
             }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MonoProject.Common.Interface;
 using MonoProject.Common.Models;
 using MonoProject.DAL.Data;
@@ -17,7 +18,7 @@ namespace MonoProject.Repository
         private readonly IGenericRepository genericRepository;
         private readonly VehicleDbContext context;
 
-        public VehicleOwnerRepository(VehicleDbContext context, IMapper mapper, IGenericRepository genericRepository)
+        public VehicleOwnerRepository(IMapper mapper, IGenericRepository genericRepository, VehicleDbContext context)
         {
             this.mapper = mapper;
             this.genericRepository = genericRepository;
@@ -52,19 +53,20 @@ namespace MonoProject.Repository
             }
         }
 
-        public async Task<int> AddAsync(VehicleOwnerDTO entity)
+        public EntityEntry<VehicleOwner> Add(VehicleOwnerDTO entity)
         {
-            return await genericRepository.AddAsync(mapper.Map<VehicleOwner>(entity));
+            entity.Id = Guid.NewGuid();
+            return genericRepository.Add(mapper.Map<VehicleOwner>(entity));
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<EntityEntry<VehicleOwner>> DeleteAsync(Guid id)
         {
             return await genericRepository.DeleteAsync<VehicleOwner>(id);
         }
 
-        public async Task<int> DeleteAsync(VehicleOwnerDTO entity)
+        public EntityEntry<VehicleOwner> Delete(VehicleOwnerDTO entity)
         {
-            return await genericRepository.DeleteAsync(mapper.Map<VehicleOwner>(entity));
+            return genericRepository.Delete(mapper.Map<VehicleOwner>(entity));
         }
 
         public async Task<VehicleOwnerDTO> GetAsync(Guid id)
@@ -72,10 +74,10 @@ namespace MonoProject.Repository
             return mapper.Map<VehicleOwnerDTO>(await genericRepository.GetAsync<VehicleOwner>(id));
         }
 
-        public async Task<int> UpdateAsync(VehicleOwnerDTO entity)
+        public EntityEntry<VehicleOwner> Update(VehicleOwnerDTO entity)
         {
             context.ChangeTracker.Clear();
-            return await genericRepository.UpdateAsync(mapper.Map<VehicleOwner>(entity));
+            return genericRepository.Update(mapper.Map<VehicleOwner>(entity));
         }
     }
 }

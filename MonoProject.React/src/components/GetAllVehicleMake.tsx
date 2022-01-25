@@ -2,6 +2,8 @@ import { inject, observer } from "mobx-react";
 import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
 import { autorun } from "mobx";
 
+import classes from "./GetAllVehicleMake.module.css"
+
 const GetAllVehicleMake: React.FC = ({ rootStore }: any) => {
     useEffect(() => autorun(() => {
         rootStore.vehicleMakeStore?.getAllVehicleMakeAsync();
@@ -10,7 +12,8 @@ const GetAllVehicleMake: React.FC = ({ rootStore }: any) => {
 
 
     return (
-        <div>
+        <div className={classes.table}>
+            <h1>List of Vehicle Brands</h1>
             <table>
                 <thead>
                     <tr>
