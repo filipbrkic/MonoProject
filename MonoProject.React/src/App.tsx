@@ -8,7 +8,6 @@ import { Route, Switch } from "react-router-dom"
 import MainNavigation from "./layouts/MainNavigation"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/Home"
-import UpdateVehicleMake from './components/UpdateVehicleMake';
 
 
 function App() {
