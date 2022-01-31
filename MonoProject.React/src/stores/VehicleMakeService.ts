@@ -29,3 +29,19 @@ export const getAll = async () => {
         console.log(error)
     }
 }
+
+export const update = async (model: VehicleMakeDto) => {
+    try {
+        const response = await fetch("http://localhost:51044/VehicleMake/UpdateVehicleMake", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(model),
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}

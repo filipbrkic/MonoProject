@@ -1,13 +1,14 @@
 import NewVehicleMake from './components/NewVehicleMake';
 import { inject, observer } from 'mobx-react';
-import GetAllVehicleMake from './components/GetAllVehicleMake';
-import GetAllVehicleOwner from "./components/GetAllVehicleOwner";
+import VehicleMakeList from './components/VehicleMakeList';
+import VehicleOwnerList from "./components/VehicleOwnerList";
 import { rootStore } from './stores/RootStore';
 import { Route, Switch } from "react-router-dom"
 
 import MainNavigation from "./layouts/MainNavigation"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/Home"
+import UpdateVehicleMake from './components/UpdateVehicleMake';
 
 
 function App() {
@@ -20,12 +21,12 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/new-vehicle-make">
+          <Route path="/new-vehicle-make" >
             <NewVehicleMake rootStore={rootStore} />
-            <GetAllVehicleMake />
+            <VehicleMakeList />
           </Route>
-          <Route path="/vehicle-owner">
-            <GetAllVehicleOwner />
+          <Route path="/vehicle-owner" >
+            <VehicleOwnerList />
           </Route>
           <Route path="*">
             <NotFound />
