@@ -1,12 +1,21 @@
-import VehicleMakeStore from "./VehicleMakeStore";
-import VehicleOwnerStore from "./VehicleOwnerStore";
+import NewVehicleMakeViewStore from "./NewVehicleMakeViewStore";
+import VehicleMakeListViewStore from "./VehicleMakeListViewStore";
+import UpdateVehicleMakeViewStore from "./UpdateVehicleMakeViewStore";
+
+import VehicleOwnerListViewStore from "./VehiceOwnerListViewStore";
 
 export default class RootStore {
-    vehicleMakeStore;
-    vehicleOwnerStore;
+    newVehicleMakeViewStore: NewVehicleMakeViewStore;
+    vehicleMakeListViewStore: VehicleMakeListViewStore;
+    updateVehicleMakeViewStore: UpdateVehicleMakeViewStore;
+
+    vehicleOwnerListViewStore: VehicleOwnerListViewStore;
     constructor() {
-        this.vehicleMakeStore = new VehicleMakeStore();
-        this.vehicleOwnerStore = new VehicleOwnerStore();
+        this.newVehicleMakeViewStore = new NewVehicleMakeViewStore();
+        this.vehicleMakeListViewStore = new VehicleMakeListViewStore();
+        this.updateVehicleMakeViewStore = new UpdateVehicleMakeViewStore();
+
+        this.vehicleOwnerListViewStore = new VehicleOwnerListViewStore();
     }
 }
 

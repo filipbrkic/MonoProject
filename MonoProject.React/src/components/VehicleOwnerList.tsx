@@ -1,12 +1,11 @@
 import { inject, observer } from "mobx-react";
 import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
 import { autorun } from "mobx";
-import Modal from "react-modal"
 
 
 const VehicleOwnerList: React.FC = ({ rootStore }: any) => {
     useEffect(() => autorun(() => {
-        rootStore.vehicleOwnerStore?.getAllVehicleOwnerAsync();
+        rootStore.vehicleOwnerListViewStore?.getAllVehicleOwnerAsync();
     }), [])
 
     return (
@@ -26,7 +25,7 @@ const VehicleOwnerList: React.FC = ({ rootStore }: any) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rootStore.vehicleOwnerStore.data.map((owner: { id: Key | null | undefined; firstName: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; lastName: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; dateOfBirth: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
+                    {rootStore.vehicleOwnerListViewStore.data.map((owner: { id: Key | null | undefined; firstName: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; lastName: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; dateOfBirth: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) =>
                         <tr key={owner.id}>
                             <td>{owner.firstName}</td>
                             <td>{owner.lastName}</td>

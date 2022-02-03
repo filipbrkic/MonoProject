@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import { inject, observer } from "mobx-react";
+import { useRef } from "react";
 
 import classes from "./NewVehicleMake.module.css"
 
@@ -12,7 +12,7 @@ const NewVehicleMake = ({ rootStore }: any) => {
         const enteredName = (nameInputRef.current as HTMLInputElement).value;
         const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
 
-        rootStore.vehicleMakeStore.createVehicleMakeAsync({
+        rootStore.newVehicleMakeViewStore.createVehicleMakeAsync({
             name: enteredName,
             abrv: enteredAbrv,
         })
