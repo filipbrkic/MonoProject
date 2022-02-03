@@ -4,6 +4,7 @@ using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -41,9 +42,12 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
-            var response = new PagedResult<VehicleOwnerDTO, object>()
+            var vehicleOwnerList = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting);
+            var vehicleOwner = mapper.Map<IEnumerable<VehicleOwnerDVO>>(vehicleOwnerList);
+
+            var response = new PagedResult<VehicleOwnerDVO, object>()
             {
-                Data = await vehicleOwnerService.GetAllAsync(filtering, paging, sorting),
+                Data = vehicleOwner,
                 Filtering = filtering,
                 Pagination = paging,
                 Sorting = sorting,
@@ -53,9 +57,10 @@ namespace MonoProject.API.Controllers
         }   
 
         [HttpPost("[action]")]
-        public ActionResult<VehicleOwnerDTO> PostVehicleOwner([FromQuery] VehicleOwnerDTO vehicleOwnerDTO)
+        public ActionResult PostVehicleOwner([FromQuery] VehicleOwnerDVO vehicleOwnerDVO)
         {
-            var result = vehicleOwnerService.Add(vehicleOwnerDTO);
+            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleOwnerDVO);
+            var result = vehicleOwnerService.Add(vehicleOwner);
 
             if (result == null)
             {
@@ -66,9 +71,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateVehicleOwner([FromBody] VehicleOwnerDTO vehicleOwnerDTO)
+        public IActionResult UpdateVehicleOwner([FromBody] VehicleOwnerDVO vehicleOwnerDVO)
         {
-            var result = vehicleOwnerService.Update(vehicleOwnerDTO);
+            var vehicleOwner = mapper.Map<VehicleOwnerDTO>(vehicleOwnerDVO);
+
+            var result = vehicleOwnerService.Update(vehicleOwner);
 
             if (result == null)
             {

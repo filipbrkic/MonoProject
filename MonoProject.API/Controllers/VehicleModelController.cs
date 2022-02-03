@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -13,11 +15,13 @@ namespace MonoProject.API.Controllers
     {
         private readonly IVehicleModelService vehicleModelService;
         private readonly IVehicleEngineTypeService vehicleEngineTypeService;
+        private readonly IMapper mapper;
 
-        public VehicleModelController(IVehicleModelService vehicleModelService, IVehicleEngineTypeService vehicleEngineTypeService)
+        public VehicleModelController(IVehicleModelService vehicleModelService, IVehicleEngineTypeService vehicleEngineTypeService, IMapper mapper)
         {
             this.vehicleModelService = vehicleModelService;
             this.vehicleEngineTypeService = vehicleEngineTypeService;
+            this.mapper = mapper;
         }
 
         [HttpGet("[action]")]
@@ -40,23 +44,29 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
+            var vehicleModelList = await vehicleModelService.GetAllAsync(filtering, paging, sorting);
+            var vehicleModel = mapper.Map<IEnumerable<VehicleModelDVO>>(vehicleModelList);
 
-            var response = new PagedResult<VehicleModelDTO, VehicleEngineTypeDTO>()
+            var vehicleEngineTypeList = await vehicleEngineTypeService.GetAllAsync();
+            var vehicleEngineType = mapper.Map<IEnumerable<VehicleEngineTypeDVO>>(vehicleEngineTypeList);
+
+            var response = new PagedResult<VehicleModelDVO, VehicleEngineTypeDVO>()
             {
-                Data = await vehicleModelService.GetAllAsync(filtering, paging, sorting),
+                Data = vehicleModel,
                 Filtering = filtering,
                 Pagination = paging,
                 Sorting = sorting,
-                MetaData = await vehicleEngineTypeService.GetAllAsync(),
+                MetaData = vehicleEngineType,
             };
 
             return Ok(response);
         }
 
         [HttpPost("[action]")]
-        public ActionResult<VehicleModelDTO> PostVehicleModel([FromBody] VehicleModelDTO vehicleModelDTO)
+        public ActionResult PostVehicleModel([FromBody] VehicleModelDVO vehicleModelDVO)
         {
-            var result = vehicleModelService.Add(vehicleModelDTO);
+            var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleModelDVO);
+            var result = vehicleModelService.Add(vehicleModel);
 
             if (result == null)
             {
@@ -67,9 +77,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateVehicleModel([FromBody] VehicleModelDTO vehicleModelDTO)
+        public IActionResult UpdateVehicleModel([FromBody] VehicleModelDVO vehicleModelDVO)
         {
-            var result = vehicleModelService.Update(vehicleModelDTO);
+            var vehicleModel = mapper.Map<VehicleModelDTO>(vehicleModelDVO);
+
+            var result = vehicleModelService.Update(vehicleModel);
 
             if (result == null)
             {

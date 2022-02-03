@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MonoProject.API.Models;
 using MonoProject.Common.Models;
 using MonoProject.Service.Common;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonoProject.API.Controllers
@@ -12,10 +14,12 @@ namespace MonoProject.API.Controllers
     public class VehicleMakeController : ControllerBase
     {
         private readonly IVehicleMakeService vehicleMakeService;
+        private readonly IMapper mapper;
 
-        public VehicleMakeController(IVehicleMakeService vehicleMakeService)
+        public VehicleMakeController(IVehicleMakeService vehicleMakeService, IMapper mapper)
         {
             this.vehicleMakeService = vehicleMakeService;
+            this.mapper = mapper;
         }
 
         [HttpGet("[action]")]
@@ -38,9 +42,12 @@ namespace MonoProject.API.Controllers
             var paging = new Paging(pageNumber, pageSize);
             var sorting = new Sorting(sortOrder, sortBy);
 
-            var response = new PagedResult<VehicleMakeDTO, object>()
+            var vehicleMakeList = await vehicleMakeService.GetAllAsync(filtering, paging, sorting);
+            var vehicleMake = mapper.Map<IEnumerable<VehicleMakeDVO>>(vehicleMakeList);
+
+            var response = new PagedResult<VehicleMakeDVO, object>()
             {
-                Data = await vehicleMakeService.GetAllAsync(filtering, paging, sorting),
+                Data = vehicleMake,
                 Filtering = filtering,
                 Pagination = paging,
                 Sorting = sorting,
@@ -50,11 +57,13 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPost("[action]")]
-        public ActionResult PostVehicleMake([FromBody] VehicleMakeDTO vehicleMakeDTO)
+        public ActionResult PostVehicleMake([FromBody] VehicleMakeDVO vehicleMakeDVO)
         {
             try
             {
-                var result = vehicleMakeService.Add(vehicleMakeDTO);
+                var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleMakeDVO);
+
+                var result = vehicleMakeService.Add(vehicleMake);
 
                 if (result == null)
                 {
@@ -70,9 +79,11 @@ namespace MonoProject.API.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateVehicleMake([FromBody] VehicleMakeDTO vehicleMakeDTO)
+        public IActionResult UpdateVehicleMake([FromBody] VehicleMakeDVO vehicleMakeDVO)
         {
-            var result = vehicleMakeService.Update(vehicleMakeDTO);
+            var vehicleMake = mapper.Map<VehicleMakeDTO>(vehicleMakeDVO);
+
+            var result = vehicleMakeService.Update(vehicleMake);
 
             if (result == null)
             {
