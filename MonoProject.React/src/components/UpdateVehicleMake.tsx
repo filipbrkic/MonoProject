@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 
 import classes from "./NewVehicleMake.module.css"
 
-const UpdateVehicleMake = ({ rootStore, id }: any,) => {
+const UpdateVehicleMake = ({ rootStore, make }: any,) => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
 
@@ -13,7 +13,7 @@ const UpdateVehicleMake = ({ rootStore, id }: any,) => {
         const enteredAbrv = (abrvInputRef.current as HTMLInputElement).value;
 
         rootStore.updateVehicleMakeViewStore.updateVehicleMakeAsync({
-            id: id,
+            id: make.id,
             name: enteredName,
             abrv: enteredAbrv,
         })
