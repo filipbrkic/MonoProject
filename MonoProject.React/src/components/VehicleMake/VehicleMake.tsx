@@ -3,6 +3,8 @@ import { useState } from "react";
 import VehicleMakeModal from "./VehicleMakeModal";
 import DeleteVehicleMake from "./DeleteVehicleMake"
 
+import classes from "./VehicleMakeList.module.css"
+
 const VehicleMake = ({ make }: any) => {
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -15,8 +17,7 @@ const VehicleMake = ({ make }: any) => {
             <td>{make.name}</td>
             <td>{make.abrv}</td>
             <td>
-                <button onClick={openModal}>Edit</button>
-
+                <button className={classes.edit} onClick={openModal}>Edit</button>
                 <VehicleMakeModal key={make.id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} make={make} />
             </td>
             <td>

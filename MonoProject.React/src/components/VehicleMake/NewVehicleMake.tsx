@@ -28,7 +28,7 @@ const NewVehicleMake = ({ rootStore }: any) => {
                 <div>
                     <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
                 </div>
-                <button type="submit" >Save</button>
+                <button className={classes.save} type="submit" >Save</button>
             </form>
         </div>
     );

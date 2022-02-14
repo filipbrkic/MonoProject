@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 
 import classes from "./NewVehicleMake.module.css"
 
-const UpdateVehicleMake = ({ rootStore, make }: any,) => {
+const UpdateVehicleMake = ({ rootStore, make, closeModal }: any,) => {
     const nameInputRef = useRef<HTMLInputElement>(null);
     const abrvInputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +29,8 @@ const UpdateVehicleMake = ({ rootStore, make }: any,) => {
                 <div>
                     <input id="abrv" type="text" placeholder={make.abrv} ref={abrvInputRef} />
                 </div>
-                <button type="submit" >Update</button>
+                <button className={classes.update} type="submit" >Update</button>
+                <button className={classes.close} onClick={closeModal} >Close</button>
             </form>
         </div>
     );

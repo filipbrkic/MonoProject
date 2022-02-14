@@ -16,13 +16,10 @@ const VehicleMakeModal = ({ modalIsOpen, setIsOpen, make }: any) => {
             ariaHideApp={false}
             contentLabel="Update Modal"
             className={classes.modal}
+            onRequestClose={closeModal}
         >
             <div>
-                <UpdateVehicleMake make={make} />
-                <div className={classes.close}>
-
-                    <button onClick={closeModal} >close</button>
-                </div>
+                <UpdateVehicleMake make={make} closeModal={closeModal} />
             </div>
         </ReactModal>
     );
