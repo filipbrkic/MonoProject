@@ -46,6 +46,20 @@ class VehicleMakeService {
             console.log(error)
         }
     }
+
+    delete = async (id: number) => {
+        try {
+            const response = await fetch(`http://localhost:51044/VehicleMake/DeleteVehicleMake?id=${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default VehicleMakeService;

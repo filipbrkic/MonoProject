@@ -1,6 +1,7 @@
 import { inject, observer } from "mobx-react";
 import { useState } from "react";
 import VehicleMakeModal from "./VehicleMakeModal";
+import DeleteVehicleMake from "./DeleteVehicleMake"
 
 const VehicleMake = ({ make }: any) => {
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -17,6 +18,9 @@ const VehicleMake = ({ make }: any) => {
                 <button onClick={openModal}>Edit</button>
 
                 <VehicleMakeModal key={make.id} modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} make={make} />
+            </td>
+            <td>
+                <DeleteVehicleMake key={make.id} make={make} />
             </td>
         </tr>
     );

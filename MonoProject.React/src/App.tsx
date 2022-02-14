@@ -1,7 +1,7 @@
-import NewVehicleMake from './components/NewVehicleMake';
+import NewVehicleMake from './components/VehicleMake/NewVehicleMake';
 import { inject, observer } from 'mobx-react';
-import VehicleMakeList from './components/VehicleMakeTable';
-import VehicleOwnerList from "./components/VehicleOwnerList";
+import VehicleMakeList from './components/VehicleMake/VehicleMakeTable';
+import VehicleOwnerList from "./components/VehicleOwner/VehicleOwnerList";
 import { rootStore } from './stores/RootStore';
 import { Route, Switch } from "react-router-dom"
 

@@ -10,7 +10,7 @@ const VehicleMakeList = ({ rootStore }: any) => {
     }), [])
 
     const list = observable(rootStore.vehicleMakeListViewStore.data).map((make: { id: Key | null | number; name: boolean | ReactChild | ReactFragment | ReactPortal | null | string; abrv: boolean | ReactChild | ReactFragment | ReactPortal | null | string; }) =>
-        <VehicleMake key={make.id} make={make} />
+        <VehicleMake key={make.id} make={make} rootStore={rootStore} />
     )
 
     return (

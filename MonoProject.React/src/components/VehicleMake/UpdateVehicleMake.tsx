@@ -24,10 +24,10 @@ const UpdateVehicleMake = ({ rootStore, make }: any,) => {
             <h1>Update Vehicle Brand</h1>
             <form onSubmit={() => inputVehicleMakeHandler()} >
                 <div>
-                    <input id="name" type="text" placeholder="Name" ref={nameInputRef} />
+                    <input id="name" type="text" placeholder={make.name} ref={nameInputRef} />
                 </div>
                 <div>
-                    <input id="abrv" type="text" placeholder="Abbreviation" ref={abrvInputRef} />
+                    <input id="abrv" type="text" placeholder={make.abrv} ref={abrvInputRef} />
                 </div>
                 <button type="submit" >Update</button>
             </form>

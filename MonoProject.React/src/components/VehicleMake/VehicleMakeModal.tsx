@@ -15,6 +15,7 @@ const VehicleMakeModal = ({ modalIsOpen, setIsOpen, make }: any) => {
             isOpen={modalIsOpen}
             ariaHideApp={false}
             contentLabel="Update Modal"
+            className={classes.modal}
         >
             <div>
                 <UpdateVehicleMake make={make} />
