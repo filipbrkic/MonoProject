@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoProject.Common.Models
+namespace MonoProject.Models
 {
     public class VehicleModelDTO
     {

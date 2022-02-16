@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using MonoProject.Common.Interface;
-using MonoProject.Common.Models;
+using MonoProject.Models;
 using MonoProject.DAL.Models;
 using System;
 using System.Collections.Generic;
