@@ -9,9 +9,6 @@ export default class VehicleMakeListViewStore {
     }
 
     data = [];
-    pagination = null;
-    sorting = null;
-    filtering = null;
 
     status = "initial";
 

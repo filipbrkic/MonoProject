@@ -9,9 +9,6 @@ export default class VehicleOwnerListViewStore {
     }
 
     data = [];
-    pagination = null;
-    sorting = null;
-    filtering = null;
 
     status = "initial";
 

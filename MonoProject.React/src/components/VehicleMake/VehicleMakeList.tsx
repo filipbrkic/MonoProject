@@ -1,4 +1,4 @@
-import { autorun, observable } from "mobx";
+import { autorun } from "mobx";
 import { inject, observer } from "mobx-react";
 import { Key, ReactChild, ReactFragment, ReactPortal, useEffect } from "react";
 import VehicleMake from "./VehicleMake"
