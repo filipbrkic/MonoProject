@@ -10,7 +10,7 @@ using MonoProject.DAL.Data;
 namespace MonoProject.DAL.Migrations
 {
     [DbContext(typeof(VehicleDbContext))]
-    [Migration("20211029142220_InitialMigration")]
+    [Migration("20220405211359_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,13 +85,13 @@ namespace MonoProject.DAL.Migrations
 
             modelBuilder.Entity("MonoProject.DAL.Models.VehicleModelToVehicleOwnerLink", b =>
                 {
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid?>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ModelId")
+                    b.Property<Guid?>("ModelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RegistrationId")
+                    b.Property<Guid?>("RegistrationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OwnerId", "ModelId", "RegistrationId");
