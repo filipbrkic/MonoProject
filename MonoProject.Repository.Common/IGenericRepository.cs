@@ -10,7 +10,7 @@ namespace MonoProject.Repository.Common
     {
         Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> match) where T : class;
         Task<(IEnumerable<T>, int)> GetAllAsync<T>(Expression<Func<T, bool>> match, Expression<Func<T, string>> orderByExpression, int take, int skip, string sortOrder) where T : class;
-        public EntityEntry<T> Add<T>(T entity) where T : class;
+        EntityEntry<T> Add<T>(T entity) where T : class;
         Task<T> GetAsync<T>(Guid id) where T : class;
         Task<T> GetUserAsync<T>(Guid id) where T : class;
         EntityEntry<T> Update<T>(T entity) where T : class;
