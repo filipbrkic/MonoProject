@@ -5,16 +5,16 @@ namespace MonoProject.Service.Common
 {
     public interface IUnitOfWork
     {
-        public IVehicleMakeRepository VehicleMakeRepository { get; }
+        IVehicleMakeRepository VehicleMakeRepository { get; }
 
-        public IVehicleModelRepository VehicleModelRepository { get; }
+        IVehicleModelRepository VehicleModelRepository { get; }
 
-        public IVehicleEngineTypeRepository VehicleEngineTypeRepository { get; }
+        IVehicleEngineTypeRepository VehicleEngineTypeRepository { get; }
 
-        public IVehicleOwnerRepository VehicleOwnerRepository { get; }
+        IVehicleOwnerRepository VehicleOwnerRepository { get; }
 
-        public IVehicleRegistrationRepository VehicleRegistrationRepository { get; }
+        IVehicleRegistrationRepository VehicleRegistrationRepository { get; }
 
-        public void SaveChanges();
+        void SaveChanges();
     }
 }
